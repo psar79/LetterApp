@@ -34,7 +34,6 @@ public class UpdatedAt {
         return updateDate;
     }
 
-
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
