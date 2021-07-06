@@ -1,6 +1,5 @@
 package userletters.api.letter.addLetter.request;
 
-
 import javax.validation.constraints.NotBlank;
 
 public class InformationRequest {
