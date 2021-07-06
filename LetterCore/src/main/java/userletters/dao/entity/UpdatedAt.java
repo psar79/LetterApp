@@ -15,7 +15,6 @@ public class UpdatedAt {
     @OneToOne(mappedBy = "updatedAt")
     private Letter letter;
 
-
     public UpdatedAt() {
     }
 
