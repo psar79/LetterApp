@@ -22,6 +22,7 @@ public class InformationRequest {
         return typeRequest;
     }
 
+
     public void setType2(TypeRequest typeRequest) {
         this.typeRequest = typeRequest;
     }

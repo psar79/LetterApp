@@ -12,6 +12,7 @@ public class SenderRequest {
     @Email
     private String email2;
 
+
     public String getSurname2() {
         return surname2;
     }

@@ -6,6 +6,7 @@ public class UpdatedAtRequest {
 
     private Date updateDate = new Date();
 
+
     public Date getUpdateDate() {
         return updateDate;
     }

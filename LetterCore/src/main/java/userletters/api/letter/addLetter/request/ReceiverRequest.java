@@ -14,6 +14,7 @@ public class ReceiverRequest {
     @Email
     private String email;
 
+
     public String getName() {
         return name;
     }
