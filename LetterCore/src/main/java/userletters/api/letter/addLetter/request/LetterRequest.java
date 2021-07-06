@@ -20,7 +20,6 @@ public class LetterRequest {
 
     private InformationRequest informationRequest;
 
-
     public Long getId() {
         return id;
     }

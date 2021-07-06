@@ -1,6 +1,5 @@
 package userletters.api.letter.addLetter.request;
 
-
 import javax.validation.constraints.NotBlank;
 
 public class InformationRequest {
@@ -21,7 +20,6 @@ public class InformationRequest {
     public TypeRequest getType2() {
         return typeRequest;
     }
-
 
     public void setType2(TypeRequest typeRequest) {
         this.typeRequest = typeRequest;

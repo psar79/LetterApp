@@ -10,7 +10,6 @@ public class SenderAddressRequest {
     private String buildingNumber;
     private String flatNumber;
 
-
     public String getPostcode() {
         return postcode;
     }

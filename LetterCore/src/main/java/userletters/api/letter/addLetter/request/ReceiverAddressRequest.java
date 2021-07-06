@@ -15,7 +15,6 @@ public class ReceiverAddressRequest {
     @NotBlank
     private String flatNumber;
 
-
     public String getPostCode() {
         return postCode;
     }
