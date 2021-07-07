@@ -5,7 +5,6 @@ import org.springframework.util.CollectionUtils;
 import userletters.api.letter.getAll.response.*;
 import userletters.dao.entity.*;
 
-
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -104,6 +103,5 @@ public class LetterInfoMapper {
         letterResponse.setInformationResponse(informationResponse);
 
         return letterResponse;
-
     }
 }
