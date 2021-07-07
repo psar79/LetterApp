@@ -1,13 +1,11 @@
 package userregister.usercore.dao.entity;
 
-
-import com.sun.javafx.beans.IDProperty;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-import org.springframework.data.annotation.Id;
-
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class User {
 
     @Id
@@ -20,6 +18,9 @@ public class User {
     private String email;
     private String phoneNumber;
     private boolean registered;
+
+    public User() {
+    }
 
     public Long getId() {
         return id;
