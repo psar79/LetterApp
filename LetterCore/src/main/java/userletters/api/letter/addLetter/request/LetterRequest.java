@@ -83,5 +83,6 @@ public class LetterRequest {
     public void setInformationRequest(InformationRequest informationRequest) {
         this.informationRequest = informationRequest;
     }
-
 }
+
+
