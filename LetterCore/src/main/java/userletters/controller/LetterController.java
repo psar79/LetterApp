@@ -13,7 +13,6 @@ import userletters.manager.LetterManager;
 import userletters.mapper.LetterInfoMapper;
 import userletters.mapper.LetterRequestMapper;
 
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
