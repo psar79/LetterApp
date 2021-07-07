@@ -39,3 +39,5 @@ public class ReceiverResponse {
         this.emailResponse = emailResponse;
     }
 }
+
+

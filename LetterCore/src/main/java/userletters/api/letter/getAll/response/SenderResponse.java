@@ -30,3 +30,5 @@ public class SenderResponse {
         this.emailResponse = emailResponse;
     }
 }
+
+

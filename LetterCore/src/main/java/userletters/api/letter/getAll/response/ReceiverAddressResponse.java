@@ -48,3 +48,5 @@ public class ReceiverAddressResponse {
         this.flatNumberResponse = flatNumberResponse;
     }
 }
+
+
