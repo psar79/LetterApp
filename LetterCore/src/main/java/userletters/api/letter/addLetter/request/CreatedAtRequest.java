@@ -13,5 +13,4 @@ public class CreatedAtRequest {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
-
 }

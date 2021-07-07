@@ -46,3 +46,4 @@ public class ReceiverRequest {
         this.email = email;
     }
 }
+

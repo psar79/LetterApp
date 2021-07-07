@@ -55,3 +55,4 @@ public class ReceiverAddressRequest {
         this.flatNumber = flatNumber;
     }
 }
+

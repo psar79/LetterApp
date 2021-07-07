@@ -36,3 +36,5 @@ public class SenderRequest {
         this.email2 = email2;
     }
 }
+
+
