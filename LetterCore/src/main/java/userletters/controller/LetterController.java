@@ -55,7 +55,6 @@ public class LetterController {
         LetterInfo letterInfo = letterInfoMapper.mapToResponse(result);
 
         return ResponseEntity.status(HttpStatus.OK).body(letterInfo);
-
     }
 
     @GetMapping("/byId")
