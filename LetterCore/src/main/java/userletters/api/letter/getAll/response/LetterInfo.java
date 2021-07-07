@@ -26,3 +26,5 @@ public class LetterInfo {
         this.quantity = quantity;
     }
 }
+
+

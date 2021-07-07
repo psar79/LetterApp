@@ -13,3 +13,5 @@ public class UpdatedAtResponse {
         this.updateDateResponse = updateDateResponse;
     }
 }
+
+

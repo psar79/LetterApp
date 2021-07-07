@@ -21,3 +21,5 @@ public class InformationResponse {
         this.typeResponse = typeResponse;
     }
 }
+
+
