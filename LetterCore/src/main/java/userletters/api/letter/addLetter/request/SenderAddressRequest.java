@@ -42,3 +42,6 @@ public class SenderAddressRequest {
         this.flatNumber = flatNumber;
     }
 }
+
+
+
