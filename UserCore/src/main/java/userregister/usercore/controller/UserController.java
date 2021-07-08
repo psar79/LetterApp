@@ -68,11 +68,12 @@ public class UserController {
         if (!validator2.validatePhoneNumberAndCode(number, code)) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please, give proper number");
         }
+
+        Register register = registerManager.findByPhoneNumber(number);
+        if (register.getCode().equals(code)) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
         return null;
-//        Register register = registerManager.findByPhoneNumber(number);
-//        if (register.getCode().equals(code)) {
-//            return ResponseEntity.status(HttpStatus.OK).build();
-//        }
 ////        registerManager.registerUser(register);
 //
 //        String token = refreshToken.tokenCreator();
