@@ -9,12 +9,13 @@ import java.util.Objects;
 public class RegisterMapper {
 
     public Register getRegister(String number, String code) {
-      if(Objects.isNull(number) || Objects.isNull(code)){
-          return null;
-      }
+        if (Objects.isNull(number) || Objects.isNull(code)) {
+            return null;
+        }
         Register register = new Register();
         register.setCode(code);
         register.setPhoneNumber(number);
         return register;
     }
 }
+

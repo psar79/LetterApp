@@ -23,5 +23,4 @@ class RefreshTokenTest {
         //then
         assertEquals("1234567899", token);
     }
-
 }

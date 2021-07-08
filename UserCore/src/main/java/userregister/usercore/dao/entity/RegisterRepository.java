@@ -8,3 +8,4 @@ public interface RegisterRepository extends CrudRepository<Register, Long> {
 
     public Register findByPhoneNumber(String phoneNumber);
 }
+

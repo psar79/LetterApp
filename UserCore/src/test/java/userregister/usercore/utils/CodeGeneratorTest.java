@@ -24,3 +24,4 @@ class CodeGeneratorTest {
         assertEquals("123456", code);
     }
 }
+

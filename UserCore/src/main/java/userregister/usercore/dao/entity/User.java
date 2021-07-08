@@ -41,3 +41,4 @@ public class User {
         this.refreshedToken = refreshedToken;
     }
 }
+
