@@ -19,13 +19,13 @@ import userregister.usercore.utils.Validator2;
 @RestController
 public class UserController {
 
-    private Validator validator;
-    private Validator2 validator2;
-    private CodeGenerator codeGenerator;
-    private RegisterManager registerManager;
-    private RegisterMapper registerMapper;
-    private RefreshToken refreshToken;
-    private UserMapper userMapper;
+    private final Validator validator;
+    private final Validator2 validator2;
+    private final CodeGenerator codeGenerator;
+    private final RegisterManager registerManager;
+    private final RegisterMapper registerMapper;
+    private final RefreshToken refreshToken;
+    private final UserMapper userMapper;
 
     @Autowired
     public UserController(Validator validator, Validator2 validator2, CodeGenerator codeGenerator, RegisterManager registerManager, RegisterMapper registerMapper, RefreshToken refreshToken, UserMapper userMapper) {
@@ -67,32 +67,18 @@ public class UserController {
         }
 
 ////        registerManager.registerUser(register);
-//
+
         String token = refreshToken.tokenCreator();
 
         User user = userMapper.getUser(number, token);
 
         registerManager.saveUser(user);
-//
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(token);
-        return null;
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(token);
     }
 }
 
 
-/////////////////////
-
-//        Register registerr = registerManager.findByPhoneNumber(phoneNumber);
-//
-//        registerr.getCode().equals(code)
-//                jesli true, to wtedy zapisz do tebelki 'uzytkonwicy'
-//
-//
-//        return ResponseEntity.ok().build();
-
-///////////////////////
-
-//    }
 
 
 

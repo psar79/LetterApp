@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CodeGenerator {
 
-    public String code(){
+    public String code() {
         return "123456";
     }
 }
