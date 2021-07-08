@@ -15,7 +15,6 @@ public class UserManager {
 
     public UserRepository userRepository;
 
-
     @Autowired
     public UserManager(UserRepository userRepository) {
         this.userRepository = userRepository;
