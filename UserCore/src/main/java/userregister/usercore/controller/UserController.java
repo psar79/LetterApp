@@ -44,6 +44,11 @@ public class UserController {
 
     }
 
+    public ResponseEntity<String> userRegister2(@RequestParam String number, String code){
+
+        return null;
+
+    }
 
 
 /////////////////////
