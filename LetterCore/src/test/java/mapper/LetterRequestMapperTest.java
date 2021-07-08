@@ -2,8 +2,10 @@ package mapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import user.database.userletters.api.letter.addLetter.request.*;
-import user.database.userletters.dao.entity.Letter;
+import userletters.api.letter.addLetter.request.*;
+import userletters.dao.entity.Letter;
+import userletters.mapper.LetterRequestMapper;
+
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -38,6 +40,9 @@ class LetterRequestMapperTest {
 
         //Then
         assertEquals("Wojciech", result.getSender().getSurname());
+    }
+
+    private void assertEquals(String wojciech, String surname) {
     }
 
     @Test
