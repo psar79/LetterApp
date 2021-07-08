@@ -18,3 +18,4 @@ public class RegisterMapper {
         return register;
     }
 }
+

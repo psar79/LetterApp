@@ -41,6 +41,4 @@ class Validator2Test {
         //then
         assertFalse(result);
     }
-
-
 }

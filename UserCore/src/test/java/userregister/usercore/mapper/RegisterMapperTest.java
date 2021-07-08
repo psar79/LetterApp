@@ -60,5 +60,4 @@ class RegisterMapperTest {
         //then
         assertNull(result);
     }
-
 }

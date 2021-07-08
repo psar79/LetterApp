@@ -9,3 +9,4 @@ public class CodeGenerator {
         return "123456";
     }
 }
+

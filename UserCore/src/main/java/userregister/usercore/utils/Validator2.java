@@ -15,3 +15,4 @@ public class Validator2 {
                 && code.length() == 6 && code.matches("\\d{6}"));
     }
 }
+
