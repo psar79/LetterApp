@@ -41,7 +41,11 @@ public class UserController {
 
         registerManager.registerUser(register);
         return ResponseEntity.ok().build();
+
     }
+
+
+
 /////////////////////
 
 //        Register registerr = registerManager.findByPhoneNumber(phoneNumber);
