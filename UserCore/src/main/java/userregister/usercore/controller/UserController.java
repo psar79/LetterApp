@@ -9,23 +9,41 @@ import org.springframework.web.bind.annotation.RestController;
 import userregister.usercore.dao.entity.Register;
 import userregister.usercore.manager.RegisterManager;
 import userregister.usercore.mapper.RegisterMapper;
+import userregister.usercore.mapper.UserMapper;
 import userregister.usercore.utils.CodeGenerator;
 import userregister.usercore.utils.Validator;
+import userregister.usercore.utils.Validator2;
 
 @RestController
 public class UserController {
 
     private Validator validator;
+    private Validator2 validator2;
     private CodeGenerator codeGenerator;
     private RegisterManager registerManager;
     private RegisterMapper registerMapper;
+    //    private RefreshToken refreshToken;
+    private UserMapper userMapper;
+
+//    @Autowired
+//    public UserController(Validator validator, Validator2 validator2, CodeGenerator codeGenerator, RegisterManager registerManager, RegisterMapper registerMapper, RefreshToken refreshToken, UserMapper userMapper) {
+//        this.validator = validator;
+//        this.validator2 = validator2;
+//        this.codeGenerator = codeGenerator;
+//        this.registerManager = registerManager;
+//        this.registerMapper = registerMapper;
+//        this.refreshToken = refreshToken;
+//        this.userMapper = userMapper;
+//    }
 
     @Autowired
-    public UserController(Validator validator, CodeGenerator codeGenerator, RegisterManager registerManager, RegisterMapper registerMapper) {
+    public UserController(Validator validator, Validator2 validator2, CodeGenerator codeGenerator, RegisterManager registerManager, RegisterMapper registerMapper, UserMapper userMapper) {
         this.validator = validator;
+        this.validator2 = validator2;
         this.codeGenerator = codeGenerator;
         this.registerManager = registerManager;
         this.registerMapper = registerMapper;
+        this.userMapper = userMapper;
     }
 
     @PostMapping("/add")
@@ -41,14 +59,31 @@ public class UserController {
 
         registerManager.registerUser(register);
         return ResponseEntity.ok().build();
-
     }
 
-    public ResponseEntity<String> userRegister2(@RequestParam String number, String code){
 
+    @PostMapping("/add2")
+    public ResponseEntity<String> userRegister2(@RequestParam String number, String code) {
+
+        if (!validator2.validatePhoneNumberAndCode(number, code)) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please, give proper number");
+        }
         return null;
-
+//        Register register = registerManager.findByPhoneNumber(number);
+//        if (register.getCode().equals(code)) {
+//            return ResponseEntity.status(HttpStatus.OK).build();
+//        }
+////        registerManager.registerUser(register);
+//
+//        String token = refreshToken.tokenCreator();
+//
+//        User user = userMapper.getUser(number, token);
+//
+//        registerManager.saveUser(user);
+//
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(token);
     }
+}
 
 
 /////////////////////
@@ -61,9 +96,9 @@ public class UserController {
 //
 //        return ResponseEntity.ok().build();
 
-    ///////////////////////
+///////////////////////
 
 //    }
 
 
-}
+
