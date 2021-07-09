@@ -1,9 +1,6 @@
 package userregister.usercore.dao.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -13,6 +10,10 @@ public class User {
     private Long id;
     private String phoneNumber;
     private String refreshedToken;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "register_id", referencedColumnName = "id")
+    private Register register;
 
     public User() {
     }

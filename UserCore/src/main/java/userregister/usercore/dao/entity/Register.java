@@ -1,9 +1,6 @@
 package userregister.usercore.dao.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Register {
@@ -13,6 +10,12 @@ public class Register {
     private Long id;
     private String phoneNumber;
     private String code;
+
+    @OneToOne(mappedBy = "register")
+    private User user;
+
+    public Register() {
+    }
 
     public Long getId() {
         return id;
