@@ -16,6 +16,8 @@ import userregister.usercore.utils.RefreshToken;
 import userregister.usercore.utils.Validator;
 import userregister.usercore.utils.Validator2;
 
+import java.util.Objects;
+
 @RestController
 public class UserController {
 
@@ -49,22 +51,26 @@ public class UserController {
 
         Register register = registerMapper.getRegister(number, code);
 
-        registerManager.registerUser(register);
+        registerManager.addNewRegisterUser(register);
         return ResponseEntity.ok().build();
     }
 
 
     @PostMapping("/add2")
-    public ResponseEntity<String> userRegister2(@RequestParam String number, String code) {
+    public ResponseEntity<String> userRegister2(@RequestParam String number, @RequestParam  String code) {
 
         if (!validator2.validatePhoneNumberAndCode(number, code)) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please, give proper number");
         }
 
         Register register = registerManager.findByPhoneNumber(number);
-        if (register.getCode().equals(code)) {
-            return ResponseEntity.status(HttpStatus.OK).build();
+
+        if (Objects.isNull(register) || !register.getCode().equals(code)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+//        if (register=null || !register.getCode().equals(code)) {
+//            return ResponseEntity.status(HttpStatus.OK).build();
+//        }
 
 ////        registerManager.registerUser(register);
 
@@ -72,7 +78,7 @@ public class UserController {
 
         User user = userMapper.getUser(number, token);
 
-        registerManager.saveUser(user);
+        registerManager.addUser(user);
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(token);
     }

@@ -17,11 +17,11 @@ public class RegisterManager {
         this.userRepository = userRepository;
     }
 
-    public Register registerUser(Register register) {
+    public Register addNewRegisterUser(Register register) {
         return registerRepository.save(register);
     }
 
-    public User saveUser(User user) {
+    public User addUser(User user) {
         return userRepository.save(user);
     }
 
