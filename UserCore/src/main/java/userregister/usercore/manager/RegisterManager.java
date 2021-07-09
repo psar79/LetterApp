@@ -28,5 +28,9 @@ public class RegisterManager {
     public Register findByPhoneNumber(String phoneNumber) {
         return registerRepository.findByPhoneNumber(phoneNumber);
     }
+
+    public User findBYPhoneNumber(String phoneNumber){
+        return  userRepository.findByPhoneNumber(phoneNumber);
+    }
 }
 

@@ -3,6 +3,7 @@ package userregister.usercore.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,7 +57,7 @@ public class UserController {
     }
 
     @PostMapping("/add2")
-    public ResponseEntity<String> userRegister2(@RequestParam String number, @RequestParam  String code) {
+    public ResponseEntity<String> userRegister2(@RequestParam String number, @RequestParam String code) {
 
         if (!validator2.validatePhoneNumberAndCode(number, code)) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please, give proper number");
@@ -72,14 +73,21 @@ public class UserController {
             registerManager.addUser(user);
             return ResponseEntity.status(HttpStatus.OK).body(token);
         }
-
-////        registerManager.registerUser(register);
-
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+
+    @PostMapping("/login")
+    public boolean userLogin(@RequestParam String number, @RequestParam String freshToken) {
+
+        User user = registerManager.findBYPhoneNumber(number);
+
+        if (Objects.nonNull(number) && Objects.nonNull(freshToken) && Objects.nonNull(user) && user.getRefreshedToken().equals(freshToken)) {
+            return true;
+        }
+        return false;
+    }
+
 }
-
-
 
 
 
