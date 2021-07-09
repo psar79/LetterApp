@@ -55,7 +55,6 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-
     @PostMapping("/add2")
     public ResponseEntity<String> userRegister2(@RequestParam String number, @RequestParam  String code) {
 
@@ -65,22 +64,18 @@ public class UserController {
 
         Register register = registerManager.findByPhoneNumber(number);
 
-        if (Objects.isNull(register) || !register.getCode().equals(code)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        if (Objects.nonNull(register) && register.getCode().equals(code)) {
+            String token = refreshToken.tokenCreator();
+
+            User user = userMapper.getUser(number, token);
+
+            registerManager.addUser(user);
+            return ResponseEntity.status(HttpStatus.OK).body(token);
         }
-//        if (register=null || !register.getCode().equals(code)) {
-//            return ResponseEntity.status(HttpStatus.OK).build();
-//        }
 
 ////        registerManager.registerUser(register);
 
-        String token = refreshToken.tokenCreator();
-
-        User user = userMapper.getUser(number, token);
-
-        registerManager.addUser(user);
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(token);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 }
 
