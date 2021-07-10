@@ -12,6 +12,7 @@ import userregister.usercore.dao.entity.User;
 import userregister.usercore.manager.RegisterManager;
 import userregister.usercore.mapper.RegisterMapper;
 import userregister.usercore.mapper.UserMapper;
+import userregister.usercore.response.IsLoggedResponse;
 import userregister.usercore.utils.CodeGenerator;
 import userregister.usercore.utils.RefreshToken;
 import userregister.usercore.utils.Validator;
@@ -77,15 +78,17 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<Boolean> userLogin(@RequestParam String number, @RequestParam String freshToken) {
+    public ResponseEntity<IsLoggedResponse> userLogin(@RequestParam String number, @RequestParam String freshToken) {
 
         User user = registerManager.findBYPhoneNumber(number);
 
+        IsLoggedResponse isLoggedResponse = new IsLoggedResponse();
+
         if (Objects.nonNull(number) && Objects.nonNull(freshToken) && Objects.nonNull(user)
                 && user.getRefreshedToken().equals(freshToken)) {
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok().body(isLoggedResponse);
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(isLoggedResponse);
     }
 //
 //    @GetMapping("/check")
