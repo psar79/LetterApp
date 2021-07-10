@@ -4,6 +4,13 @@ public class IsLoggedResponse {
 
     private boolean logged;
 
+    public IsLoggedResponse(boolean logged) {
+        this.logged = logged;
+    }
+
+    public IsLoggedResponse() {
+    }
+
     public boolean isLogged() {
         return logged;
     }
