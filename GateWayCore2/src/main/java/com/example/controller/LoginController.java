@@ -26,6 +26,7 @@ public class LoginController {
         }
         return "Bad";
     }
+
     //        LoginParam loginParam = new LoginParam();
 //        loginParam.setNumberParam(number);
 //        loginParam.setFreshTokenParam(freshToken);
