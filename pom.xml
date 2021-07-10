@@ -16,6 +16,11 @@
     <modules>
         <module>LetterCore</module>
         <module>UserCore</module>
+        <module>GateWayCore</module>
+        <module>untitled</module>
+        <module>GateWayCore</module>
+        <module>GateWayCore2</module>
+
     </modules>
 
 

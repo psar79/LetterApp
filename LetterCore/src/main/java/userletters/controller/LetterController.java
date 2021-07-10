@@ -68,6 +68,12 @@ public class LetterController {
         }
         LetterResponse letterResponseFromLetter = letterInfoMapper.toLetterResponse(byId.get());
         return ResponseEntity.ok().body(letterResponseFromLetter);
-
     }
+    public LetterResponse getByPhoneNumber(@RequestParam String number){
+
+
+
+        return null;
+    }
+
 }
