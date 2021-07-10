@@ -86,8 +86,10 @@ public class UserController {
 
         if (Objects.nonNull(number) && Objects.nonNull(freshToken) && Objects.nonNull(user)
                 && user.getRefreshedToken().equals(freshToken)) {
+            isLoggedResponse.setLogged(true);
             return ResponseEntity.ok().body(isLoggedResponse);
         }
+        isLoggedResponse.setLogged(false);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(isLoggedResponse);
     }
 //
