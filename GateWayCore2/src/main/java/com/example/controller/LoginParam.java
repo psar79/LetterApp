@@ -21,3 +21,4 @@ public class LoginParam {
         this.freshTokenParam = freshTokenParam;
     }
 }
+

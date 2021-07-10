@@ -19,3 +19,4 @@ public class LoginResponse {
         this.logged = logged;
     }
 }
+

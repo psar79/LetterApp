@@ -12,3 +12,4 @@ public class CheckResponse {
 //        this.checkFromResponse = checkFromResponse;
 //    }
 }
+
