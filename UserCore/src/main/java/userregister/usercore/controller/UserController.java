@@ -76,16 +76,22 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @PostMapping("/login")
-    public boolean userLogin(@RequestParam String number, @RequestParam String freshToken) {
+    @GetMapping("/login")
+    public ResponseEntity<Boolean> userLogin(@RequestParam String number, @RequestParam String freshToken) {
 
         User user = registerManager.findBYPhoneNumber(number);
 
-        if (Objects.nonNull(number) && Objects.nonNull(freshToken) && Objects.nonNull(user) && user.getRefreshedToken().equals(freshToken)) {
-            return true;
+        if (Objects.nonNull(number) && Objects.nonNull(freshToken) && Objects.nonNull(user)
+                && user.getRefreshedToken().equals(freshToken)) {
+            return ResponseEntity.ok(true);
         }
-        return false;
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
     }
+//
+//    @GetMapping("/check")
+//    public String check(){
+//        return "CHECK";
+//    }
 
 }
 
