@@ -86,32 +86,26 @@ public class UserController {
                 && user.getRefreshedToken().equals(freshToken)) {
             isLoggedResponse.setLogged(true);
             return ResponseEntity.ok().body(isLoggedResponse);
-//            return ResponseEntity.ok().body(true);
         }
         isLoggedResponse.setLogged(false);
         return ResponseEntity.ok(isLoggedResponse);
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }
 
-
     @GetMapping("/login2/{number}/{token}")
-    public ResponseEntity<IsLoggedResponse> userLogin2(@PathVariable("number") String number, @PathVariable("token") String freshToken) {
+    public ResponseEntity<IsLoggedResponse> userLogin2(@PathVariable("number") String number, @PathVariable("token") String token) {
 
         User user = registerManager.findBYPhoneNumber(number);
 
         IsLoggedResponse isLoggedResponse = new IsLoggedResponse();
 
-        if (Objects.nonNull(number) && Objects.nonNull(freshToken) && Objects.nonNull(user)
-                && user.getRefreshedToken().equals(freshToken)) {
+        if (Objects.nonNull(number) && Objects.nonNull(token) && Objects.nonNull(user)
+                && user.getRefreshedToken().equals(token)) {
             isLoggedResponse.setLogged(true);
             return ResponseEntity.ok().body(isLoggedResponse);
-//            return ResponseEntity.ok().body(true);
         }
         isLoggedResponse.setLogged(false);
         return ResponseEntity.ok(isLoggedResponse);
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }
-
 
     @PostMapping("/login3")
     public ResponseEntity<IsLoggedResponse> userLogin3(@RequestBody RequestLogin requestLogin) {
@@ -120,23 +114,15 @@ public class UserController {
 
         IsLoggedResponse isLoggedResponse = new IsLoggedResponse();
 
-        if (Objects.nonNull(requestLogin.getNumberParam()) && Objects.nonNull(requestLogin.getFreshTokenParam()) && Objects.nonNull(user)
+        if (Objects.nonNull(requestLogin.getNumberParam()) && Objects.nonNull(requestLogin.getFreshTokenParam())
+                && Objects.nonNull(user)
                 && user.getRefreshedToken().equals(requestLogin.getFreshTokenParam())) {
             isLoggedResponse.setLogged(true);
             return ResponseEntity.ok().body(isLoggedResponse);
-//            return ResponseEntity.ok().body(true);
         }
         isLoggedResponse.setLogged(false);
         return ResponseEntity.ok(isLoggedResponse);
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }
-
-//
-//    @GetMapping("/check")
-//    public String check(){
-//        return "CHECK";
-//    }
-
 }
 
 
