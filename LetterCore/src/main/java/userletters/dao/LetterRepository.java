@@ -7,4 +7,6 @@ import userletters.dao.entity.Letter;
 @Repository
 public interface LetterRepository extends CrudRepository<Letter, Long> {
 
+//    Letter findByPhoneNumber(String phoneNumber);
+
 }

@@ -1,5 +1,7 @@
 package com.example.service.login;
 
+import com.example.controller.LetterByPhoneNumberReceiver;
+import com.example.controller.LettersByPhoneNumberReceiver;
 import com.example.controller.LoginParam;
 import com.example.controller.LoginResponse;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +31,15 @@ public class LoginService {
 
         String url = "http://localhost:8081/login3";
         return restTemplate.postForEntity(url, loginParam, LoginResponse.class);
+    }
+
+    public ResponseEntity<LettersByPhoneNumberReceiver> getLetters(Long phone){
+
+        LetterByPhoneNumberReceiver letterByPhoneNumberReceiver = new LetterByPhoneNumberReceiver();
+        letterByPhoneNumberReceiver.setNumberResponse(phone);
+
+        String url = "http://localhost:8080/byPhoneNumber";
+        return restTemplate.postForEntity(url,letterByPhoneNumberReceiver, LettersByPhoneNumberReceiver.class);
+
     }
 }

@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.service.login.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,15 +19,16 @@ public class LoginController {
     }
 
     @PostMapping("/getLetters")
-    public String myLetters(@RequestParam String phoneNumber, @RequestParam String token) {
+    public ResponseEntity<LettersByPhoneNumberReceiver> myLetters(@RequestParam String phoneNumber, @RequestParam String token) {
 
         ResponseEntity<LoginResponse> serviceLogin = loginService.getLogin(phoneNumber, token);
 
         LoginResponse body = serviceLogin.getBody();
         if (Objects.nonNull(body) && body.isLogged()) {
-            return "OK";
+
+            return loginService.getLetters(Long.parseLong(phoneNumber));
         }
-        return "Bad";
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PostMapping("/getLetters2/{number}/{token}")
@@ -52,5 +54,6 @@ public class LoginController {
         }
         return "Bad";
     }
+
 }
 
