@@ -12,3 +12,4 @@ public class LetterByPhoneNumber {
         this.letterByPhoneNumberReceiverResponse = letterByPhoneNumberReceiverResponse;
     }
 }
+

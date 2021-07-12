@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Objects;
-
 @Service
 public class LoginService {
 
@@ -38,15 +36,11 @@ public class LoginService {
 
     public ResponseEntity<LettersByPhoneNumber> getLetters(String phoneNumber) {
 
-        LetterByPhoneNumber letterByPhoneNumber = new LetterByPhoneNumber();
-        LetterByPhoneNumberReceiverResponse letterByPhoneNumberReceiverResponse = letterByPhoneNumber.getLetterByPhoneNumberReceiverResponse();
-        if (Objects.isNull(letterByPhoneNumberReceiverResponse)) {
-            return null;
-        }
+        LetterByPhoneNumberReceiverResponse letterByPhoneNumberReceiverResponse = new LetterByPhoneNumberReceiverResponse();
         letterByPhoneNumberReceiverResponse.setPhoneNumberReceiverResponse(phoneNumber);
+        LetterByPhoneNumber letterByPhoneNumber = new LetterByPhoneNumber();
+        letterByPhoneNumber.setLetterByPhoneNumberReceiverResponse(letterByPhoneNumberReceiverResponse);
         String url = "http://localhost:8080/byPhoneNumber";
         return restTemplate.postForEntity(url, letterByPhoneNumber, LettersByPhoneNumber.class);
-
-
     }
 }

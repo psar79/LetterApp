@@ -14,3 +14,4 @@ public class LettersByPhoneNumber {
         this.letterByPhoneNumberReceiverList = letterByPhoneNumberReceiverList;
     }
 }
+
