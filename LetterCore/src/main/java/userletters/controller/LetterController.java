@@ -8,6 +8,7 @@ import userletters.api.letter.addLetter.request.LetterRequest;
 import userletters.api.letter.getAll.response.LetterInfo;
 import userletters.api.letter.getAll.response.LetterResponse;
 import userletters.api.letter.getById.request.RequestById;
+import userletters.api.letter.getByPhoneNumber.LettersByPhoneNumber;
 import userletters.api.letter.getByPhoneNumber.RequestByPhoneNumber;
 import userletters.dao.entity.Letter;
 import userletters.manager.LetterManager;
@@ -79,20 +80,8 @@ public class LetterController {
         return null;
     }
 
-    //    @GetMapping("/byPhoneNumber")
-//    public ResponseEntity<LetterResponse> getByPhoneNumber(@RequestBody RequestByPhoneNumber requestByPhoneNumber){
-//
-//        Letter letter = letterRequestMapper.mapToLetterByPhoneNumber(requestByPhoneNumber);
-//        Letter byPhoneNumber = letterManager.findByPhoneNumber(letter.getReceiver().getPhoneNumber());
-//
-//        if(Objects.isNull(byPhoneNumber)){
-//            return null;
-//        }
-//        letterInfoMapper.toLetterResponse(byPhoneNumber.get())
-//     return
-//    }
     @PostMapping("/byPhoneNumber")
-    public ResponseEntity<LettersByPhoneNumberResponse> getByPhoneNumber(@RequestBody RequestByPhoneNumber requestByPhoneNumber) {
+    public ResponseEntity<LettersByPhoneNumber> getByPhoneNumber(@RequestBody RequestByPhoneNumber requestByPhoneNumber) {
 
         Iterable<Letter> all = letterManager.findAll();
 
@@ -103,8 +92,8 @@ public class LetterController {
                 .filter(list -> list.getReceiver().getPhoneNumber().equals(requestByPhoneNumber.getPhoneNumber()))
                 .collect(Collectors.toList());
 
-        LettersByPhoneNumberResponse lettersByPhoneNumberResponse = letterByPhoneNumberMapper.mapToLetterByPhoneNumberResponse(byPhoneNumber);
+        LettersByPhoneNumber lettersByPhoneNumber = letterByPhoneNumberMapper.mapToLetterByPhoneNumberResponse(byPhoneNumber);
 
-        return ResponseEntity.ok(lettersByPhoneNumberResponse);
+        return ResponseEntity.ok(lettersByPhoneNumber);
     }
 }
