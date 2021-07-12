@@ -3,7 +3,11 @@ package userletters.mapper;
 import org.springframework.stereotype.Component;
 import userletters.api.letter.addLetter.request.*;
 import userletters.api.letter.getAll.response.LetterResponse;
+import userletters.api.letter.getAll.response.ReceiverResponse;
+import userletters.api.letter.getAll.response.SenderAddressResponse;
+import userletters.api.letter.getAll.response.SenderResponse;
 import userletters.api.letter.getById.request.RequestById;
+import userletters.api.letter.getByPhoneNumber.RequestByPhoneNumber;
 import userletters.dao.entity.*;
 
 import java.util.Objects;
@@ -88,5 +92,28 @@ public class LetterRequestMapper {
         letterResponse.setId(requestById.getId());
 
         return letterResponse;
+    }
+
+    public LetterResponse mapToLetterResponseByPhoneNumber(RequestByPhoneNumber requestByPhoneNumber) {
+        if(Objects.isNull(requestByPhoneNumber) || requestByPhoneNumber.getPhoneNumber().length() != 9){
+            return null;
+        }
+        String phoneNumber = requestByPhoneNumber.getPhoneNumber();
+        LetterResponse letterResponse = new LetterResponse();
+
+        ReceiverResponse receiverResponse = new ReceiverResponse();
+        receiverResponse.setPhoneNumberResponse(phoneNumber);
+        return letterResponse;
+    }
+    public Letter mapToLetterByPhoneNumber(RequestByPhoneNumber requestByPhoneNumber) {
+        if(Objects.isNull(requestByPhoneNumber) || requestByPhoneNumber.getPhoneNumber().length() != 9){
+            return null;
+        }
+        String phoneNumber = requestByPhoneNumber.getPhoneNumber();
+        Letter letter = new Letter();
+
+        ReceiverResponse receiverResponse = new ReceiverResponse();
+        receiverResponse.setPhoneNumberResponse(phoneNumber);
+        return letter;
     }
 }
