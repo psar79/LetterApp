@@ -2,9 +2,11 @@ package userletters.mapper;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import userletters.controller.LettersByPhoneNumberResponse;
-import userletters.controller.ReceiverLetter;
+import userletters.api.letter.getByPhoneNumber.LetterByPhoneNumber;
+import userletters.api.letter.getByPhoneNumber.LettersByPhoneNumber;
+import userletters.api.letter.getByPhoneNumber.LetterByPhoneNumberReceiver;
 import userletters.dao.entity.Letter;
+import userletters.dao.entity.Receiver;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,30 +15,40 @@ import java.util.stream.Collectors;
 @Component
 public class LetterByPhoneNumberMapper {
 
-    public LettersByPhoneNumberResponse mapToLetterByPhoneNumberResponse (List<Letter> letters){
+    public LettersByPhoneNumber mapToLetterByPhoneNumberResponse (List<Letter> letters){
 
         if(CollectionUtils.isEmpty(letters)){
             return null;
         }
-        List<ReceiverLetter> receiverLetters = letters.stream()
+        List<LetterByPhoneNumber> letterByPhoneNumbers = letters.stream()
                 .filter(Objects::nonNull)
-                .map(this::dupa)
+                .map(this::toLetterByPhoneNumber)
                 .collect(Collectors.toList());
 
-        LettersByPhoneNumberResponse response = new LettersByPhoneNumberResponse();
-        response.setReceiverLetterList(receiverLetters);
+        LettersByPhoneNumber response = new LettersByPhoneNumber();
+        response.setLetterByPhoneNumberReceiverList(letterByPhoneNumbers);
 
         return response;
 
     }
 
-    private ReceiverLetter dupa(Letter letter) {
+    private LetterByPhoneNumber toLetterByPhoneNumber(Letter letter) {
 
-        ReceiverLetter receiverLetter = new ReceiverLetter();
+        Receiver receiver = letter.getReceiver();
 
-        receiverLetter.setNumber(letter.getId());
+        LetterByPhoneNumberReceiver letterByPhoneNumberReceiver = new LetterByPhoneNumberReceiver();
 
-        return receiverLetter;
+        letterByPhoneNumberReceiver.setEmailReceiver(receiver.getEmail());
+        letterByPhoneNumberReceiver.setNameReceiver(receiver.getName());
+        letterByPhoneNumberReceiver.setPhoneNumberReceiver(receiver.getPhoneNumber());
+        letterByPhoneNumberReceiver.setSurnameReceiver(receiver.getSurname());
+
+        LetterByPhoneNumber letterByPhoneNumber = new LetterByPhoneNumber();
+
+        letterByPhoneNumber.setLetterByPhoneNumberReceiver(letterByPhoneNumberReceiver);
+
+        return letterByPhoneNumber;
 
     }
 }
+

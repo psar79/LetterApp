@@ -1,9 +1,10 @@
 package com.example.service.login;
 
-import com.example.controller.LetterByPhoneNumberReceiver;
-import com.example.controller.LettersByPhoneNumberReceiver;
 import com.example.controller.LoginParam;
 import com.example.controller.LoginResponse;
+import com.example.getLettersByReceiver.LetterByPhoneNumber;
+import com.example.getLettersByReceiver.LetterByPhoneNumberReceiverResponse;
+import com.example.getLettersByReceiver.LettersByPhoneNumber;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -33,13 +34,13 @@ public class LoginService {
         return restTemplate.postForEntity(url, loginParam, LoginResponse.class);
     }
 
-    public ResponseEntity<LettersByPhoneNumberReceiver> getLetters(Long phone){
+    public ResponseEntity<LettersByPhoneNumber> getLetters(String phoneNumber) {
 
-        LetterByPhoneNumberReceiver letterByPhoneNumberReceiver = new LetterByPhoneNumberReceiver();
-        letterByPhoneNumberReceiver.setNumberResponse(phone);
-
+        LetterByPhoneNumberReceiverResponse letterByPhoneNumberReceiverResponse = new LetterByPhoneNumberReceiverResponse();
+        letterByPhoneNumberReceiverResponse.setPhoneNumberReceiverResponse(phoneNumber);
+        LetterByPhoneNumber letterByPhoneNumber = new LetterByPhoneNumber();
+        letterByPhoneNumber.setLetterByPhoneNumberReceiverResponse(letterByPhoneNumberReceiverResponse);
         String url = "http://localhost:8080/byPhoneNumber";
-        return restTemplate.postForEntity(url,letterByPhoneNumberReceiver, LettersByPhoneNumberReceiver.class);
-
+        return restTemplate.postForEntity(url, letterByPhoneNumber, LettersByPhoneNumber.class);
     }
 }

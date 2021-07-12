@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.getLettersByReceiver.LettersByPhoneNumber;
 import com.example.service.login.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,14 +20,14 @@ public class LoginController {
     }
 
     @PostMapping("/getLetters")
-    public ResponseEntity<LettersByPhoneNumberReceiver> myLetters(@RequestParam String phoneNumber, @RequestParam String token) {
+    public ResponseEntity<LettersByPhoneNumber> myLetters(@RequestParam String phoneNumber, @RequestParam String token) {
 
         ResponseEntity<LoginResponse> serviceLogin = loginService.getLogin(phoneNumber, token);
 
         LoginResponse body = serviceLogin.getBody();
         if (Objects.nonNull(body) && body.isLogged()) {
 
-            return loginService.getLetters(Long.parseLong(phoneNumber));
+            return loginService.getLetters(phoneNumber);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
@@ -54,6 +55,5 @@ public class LoginController {
         }
         return "Bad";
     }
-
 }
 
