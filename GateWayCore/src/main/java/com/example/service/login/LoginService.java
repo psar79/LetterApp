@@ -2,7 +2,6 @@ package com.example.service.login;
 
 import com.example.controller.LoginParam;
 import com.example.controller.LoginResponse;
-import com.example.getLettersByReceiver.LetterByPhoneNumber;
 import com.example.getLettersByReceiver.LettersByPhoneNumber;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -27,41 +26,25 @@ public class LoginService {
     }
 
     public ResponseEntity<LoginResponse> getLogin2(String number, String token) {
-        String url = "http://localhost:8081/login2/" + number + "/" + token;
+//        String url = "http://localhost:8081/login2/" + number + "/" + token;
+        String url = userHostUrl + "/login2/" + number + "/" + token;
         return restTemplate.getForEntity(url, LoginResponse.class);
     }
 
     public ResponseEntity<LoginResponse> getLogin3(String number, String token) {
-
         LoginParam loginParam = new LoginParam();
         loginParam.setNumberParam(number);
         loginParam.setFreshTokenParam(token);
-
-        String url = "http://localhost:8081/login3";
+//        String url = "http://localhost:8081/login3";
+        String url = userHostUrl + "/login3";
         return restTemplate.postForEntity(url, loginParam, LoginResponse.class);
     }
 
     public ResponseEntity<LettersByPhoneNumber> getLetters(String phoneNumberFromRequest) {
-
-//        LetterByPhoneNumber letterByPhoneNumber = new LetterByPhoneNumber();
-//        letterByPhoneNumber.setPhoneNumberReceiverResponse(phoneNumber);
-
         LetterCoreRequestByPhoneNumber request = new LetterCoreRequestByPhoneNumber();
         request.setPhoneNumber(phoneNumberFromRequest);
 
-//        LetterByPhoneNumber letterByPhoneNumber = new LetterByPhoneNumber();
-//        letterByPhoneNumber.setPhoneNumberReceiverResponse(phoneNumber);
         String url = "http://localhost:8080/byPhoneNumber";
         return restTemplate.postForEntity(url, request, LettersByPhoneNumber.class);
     }
-
-//public ResponseEntity<LettersByPhoneNumber> getLetters(String phoneNumber) {
-//
-//        LetterByPhoneNumberReceiverResponse letterByPhoneNumberReceiverResponse = new LetterByPhoneNumberReceiverResponse();
-//        letterByPhoneNumberReceiverResponse.setPhoneNumberReceiverResponse(phoneNumber);
-//        LetterByPhoneNumber letterByPhoneNumber = new LetterByPhoneNumber();
-//        letterByPhoneNumber.setLetterByPhoneNumberReceiverResponse(letterByPhoneNumberReceiverResponse);
-//        String url = "http://localhost:8080/byPhoneNumber;
-//        return restTemplate.postForEntity(url, letterByPhoneNumber, LettersByPhoneNumber.class);
-//    }
 }

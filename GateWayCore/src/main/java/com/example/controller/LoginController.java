@@ -19,13 +19,11 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-
-    //TODO: sprawdz czy to Ci dziala
     @GetMapping("/letters")
     public ResponseEntity<LettersByPhoneNumber> myLetters(@RequestParam String phoneNumber, @RequestParam String token) {
         ResponseEntity<LoginResponse> serviceLogin = loginService.getLogin(phoneNumber, token);
-//TODO: sprawdzic czy serviceLogin może być null - jak tak to w serviceLogin.getBody() poleci Ci npe
-        if(Objects.isNull(serviceLogin)){
+
+        if (Objects.isNull(serviceLogin)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         LoginResponse body = serviceLogin.getBody();
@@ -38,7 +36,6 @@ public class LoginController {
 
     @PostMapping("/getLetters2/{number}/{token}")
     public String myLetters2(@PathVariable("number") String number, @PathVariable("token") String token) {
-
         ResponseEntity<LoginResponse> serviceLogin2 = loginService.getLogin2(number, token);
 
         LoginResponse body = serviceLogin2.getBody();
@@ -50,7 +47,6 @@ public class LoginController {
 
     @PostMapping("/getLetters3")
     public String myLetters3(@RequestBody LoginParam loginParam) {
-
         ResponseEntity<LoginResponse> serviceLogin3 = loginService.getLogin3(loginParam.getNumberParam(), loginParam.getFreshTokenParam());
 
         LoginResponse body = serviceLogin3.getBody();
