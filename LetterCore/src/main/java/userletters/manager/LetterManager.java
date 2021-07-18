@@ -34,5 +34,5 @@ public class LetterManager {
         letterRepository.deleteById(id);
     }
 
-//    public Letter findByPhoneNumber(String phoneNumber){return letterRepository.findByPhoneNumber(phoneNumber);}
+//    public Letter findByPhoneNumber2(String phoneNumber){return letterRepository.findByPhoneNumber(phoneNumber);}
 }

@@ -8,15 +8,10 @@ public class Sender {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String surname;
     private String phoneNumber;
     private String email;
-
-//    public Sender(String surname, String phoneNumber, String email) {
-//        this.surname = surname;
-//        this.phoneNumber = phoneNumber;
-//        this.email = email;
-//    }
 
     @OneToOne(mappedBy = "sender")
     private Letter letter;

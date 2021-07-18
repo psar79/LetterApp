@@ -2,14 +2,49 @@ package com.example.getLettersByReceiver;
 
 public class LetterByPhoneNumber {
 
-  private LetterByPhoneNumberReceiverResponse letterByPhoneNumberReceiverResponse;
+    private String surnameReceiverResponse;
+    private String nameReceiverResponse;
+    private String phoneNumberReceiverResponse;
+    private String emailReceiverResponse;
 
-    public LetterByPhoneNumberReceiverResponse getLetterByPhoneNumberReceiverResponse() {
-        return letterByPhoneNumberReceiverResponse;
+    public String getSurnameReceiverResponse() {
+        return surnameReceiverResponse;
     }
 
-    public void setLetterByPhoneNumberReceiverResponse(LetterByPhoneNumberReceiverResponse letterByPhoneNumberReceiverResponse) {
-        this.letterByPhoneNumberReceiverResponse = letterByPhoneNumberReceiverResponse;
+    public void setSurnameReceiverResponse(String surnameReceiverResponse) {
+        this.surnameReceiverResponse = surnameReceiverResponse;
     }
+
+    public String getNameReceiverResponse() {
+        return nameReceiverResponse;
+    }
+
+    public void setNameReceiverResponse(String nameReceiverResponse) {
+        this.nameReceiverResponse = nameReceiverResponse;
+    }
+
+    public String getPhoneNumberReceiverResponse() {
+        return phoneNumberReceiverResponse;
+    }
+
+    public void setPhoneNumberReceiverResponse(String phoneNumberReceiverResponse) {
+        this.phoneNumberReceiverResponse = phoneNumberReceiverResponse;
+    }
+
+    public String getEmailReceiverResponse() {
+        return emailReceiverResponse;
+    }
+
+    public void setEmailReceiverResponse(String emailReceiverResponse) {
+        this.emailReceiverResponse = emailReceiverResponse;
+    }
+
+//    public LetterByPhoneNumberReceiverResponse getLetterByPhoneNumberReceiverResponse() {
+//        return letterByPhoneNumberReceiverResponse;
+//    }
+//
+//    public void setLetterByPhoneNumberReceiverResponse(LetterByPhoneNumberReceiverResponse letterByPhoneNumberReceiverResponse) {
+//        this.letterByPhoneNumberReceiverResponse = letterByPhoneNumberReceiverResponse;
+//    }
 }
 
