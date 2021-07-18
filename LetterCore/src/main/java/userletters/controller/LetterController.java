@@ -96,9 +96,9 @@ public class LetterController {
                 .collect(Collectors.toList());
 
         LettersByPhoneNumber lettersByPhoneNumber = letterByPhoneNumberMapper.mapToLetterByPhoneNumberResponse(byPhoneNumber);
-if(Objects.isNull(lettersByPhoneNumber)) {
-    return ResponseEntity.ok().build();
-}
+        if (Objects.isNull(lettersByPhoneNumber)) {
+            return ResponseEntity.ok().build();
+        }
         return ResponseEntity.ok(lettersByPhoneNumber);
     }
 }

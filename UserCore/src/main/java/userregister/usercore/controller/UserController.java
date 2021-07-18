@@ -42,13 +42,10 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<String> userRegister(@RequestParam String number) {
-
         if (!validator.validatePhoneNumber(number) || Objects.nonNull(registerManager.findByPhoneNumber(number))) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please, give proper number");
         }
-
         String code = codeGenerator.code();
-
 
         Register register = registerMapper.setRegister(number, code);
 
@@ -58,7 +55,6 @@ public class UserController {
 
     @PostMapping("/add2")
     public ResponseEntity<String> userRegister2(@RequestParam String number, @RequestParam String code) {
-
         if (!validator2.validatePhoneNumberAndCode(number, code)) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please, give proper number");
         }
@@ -78,9 +74,7 @@ public class UserController {
 
     @GetMapping("/login")
     public ResponseEntity<IsLoggedResponse> userLogin(@RequestParam String number, @RequestParam String freshToken) {
-
         User user = registerManager.findBYPhoneNumber(number);
-
         IsLoggedResponse isLoggedResponse = new IsLoggedResponse();
 
         if (Objects.nonNull(number) && Objects.nonNull(freshToken) && Objects.nonNull(user)
@@ -94,9 +88,7 @@ public class UserController {
 
     @GetMapping("/login2/{number}/{token}")
     public ResponseEntity<IsLoggedResponse> userLogin2(@PathVariable("number") String number, @PathVariable("token") String token) {
-
         User user = registerManager.findBYPhoneNumber(number);
-
         IsLoggedResponse isLoggedResponse = new IsLoggedResponse();
 
         if (Objects.nonNull(number) && Objects.nonNull(token) && Objects.nonNull(user)
@@ -110,7 +102,6 @@ public class UserController {
 
     @PostMapping("/login3")
     public ResponseEntity<IsLoggedResponse> userLogin3(@RequestBody RequestLogin requestLogin) {
-
         User user = registerManager.findBYPhoneNumber(requestLogin.getNumberParam());
 
         IsLoggedResponse isLoggedResponse = new IsLoggedResponse();
