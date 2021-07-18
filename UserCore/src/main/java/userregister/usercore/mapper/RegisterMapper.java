@@ -8,7 +8,7 @@ import java.util.Objects;
 @Component
 public class RegisterMapper {
 
-    public Register getRegister(String number, String code) {
+    public Register setRegister(String number, String code) {
         if (Objects.isNull(number) || Objects.isNull(code)) {
             return null;
         }

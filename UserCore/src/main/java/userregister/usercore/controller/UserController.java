@@ -43,16 +43,17 @@ public class UserController {
     @PostMapping("/add")
     public ResponseEntity<String> userRegister(@RequestParam String number) {
 
-        if (!validator.validatePhoneNumber(number)) {
+        if (!validator.validatePhoneNumber(number) || Objects.nonNull(registerManager.findByPhoneNumber(number))) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please, give proper number");
         }
 
         String code = codeGenerator.code();
 
-        Register register = registerMapper.getRegister(number, code);
+
+        Register register = registerMapper.setRegister(number, code);
 
         registerManager.addNewRegisterUser(register);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(code);
     }
 
     @PostMapping("/add2")

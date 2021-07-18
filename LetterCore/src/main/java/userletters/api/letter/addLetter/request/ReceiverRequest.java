@@ -14,16 +14,16 @@ public class ReceiverRequest {
     @Email
     private String email;
 
-    public String getName() {
-        return name;
-    }
-
     public String getSurname() {
         return surname;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {

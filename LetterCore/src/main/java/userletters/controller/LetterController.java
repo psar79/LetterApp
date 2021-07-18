@@ -87,13 +87,18 @@ public class LetterController {
 
         List<Letter> result = new ArrayList<>();
         all.forEach(result::add);
-
+        if (Objects.isNull(result)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
         List<Letter> byPhoneNumber = result.stream()
+                .filter(list -> Objects.nonNull(list.getReceiver().getPhoneNumber()))
                 .filter(list -> list.getReceiver().getPhoneNumber().equals(requestByPhoneNumber.getPhoneNumber()))
                 .collect(Collectors.toList());
 
         LettersByPhoneNumber lettersByPhoneNumber = letterByPhoneNumberMapper.mapToLetterByPhoneNumberResponse(byPhoneNumber);
-
+if(Objects.isNull(lettersByPhoneNumber)) {
+    return ResponseEntity.ok().build();
+}
         return ResponseEntity.ok(lettersByPhoneNumber);
     }
 }

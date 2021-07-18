@@ -32,53 +32,53 @@ public class LetterRequestMapper {
 
         SenderAddressRequest senderAddressRequest = letterRequest.getSenderAddressRequest();
 
-        SenderAddress senderAddressEntity = new SenderAddress();
-        senderAddressEntity.setBuildingNumber((senderAddressRequest.getBuildingNumber()));
-        senderAddressEntity.setCity(senderAddressRequest.getCity());
-        senderAddressEntity.setFlatNumber(senderAddressRequest.getFlatNumber());
-        senderAddressEntity.setPostcode(senderAddressRequest.getPostcode());
+        SenderAddress senderAddress = new SenderAddress();
+        senderAddress.setBuildingNumber(senderAddressRequest.getBuildingNumber());
+        senderAddress.setCity(senderAddressRequest.getCity());
+        senderAddress.setFlatNumber(senderAddressRequest.getFlatNumber());
+        senderAddress.setPostcode(senderAddressRequest.getPostcode());
 
-        ReceiverRequest receiverRequest = new ReceiverRequest();
+        ReceiverRequest receiverRequest = letterRequest.getReceiverRequest();
 
-        Receiver receiverEntity = new Receiver();
-        receiverEntity.setName(receiverRequest.getName());
-        receiverEntity.setSurname(receiverRequest.getSurname());
-        receiverEntity.setPhoneNumber(receiverRequest.getPhoneNumber());
-        receiverEntity.setEmail(receiverRequest.getEmail());
+        Receiver receiver = new Receiver();
+        receiver.setName(receiverRequest.getName());
+        receiver.setSurname(receiverRequest.getSurname());
+        receiver.setPhoneNumber(receiverRequest.getPhoneNumber());
+        receiver.setEmail(receiverRequest.getEmail());
 
-        ReceiverAddressRequest receiverAddressRequest = new ReceiverAddressRequest();
+        ReceiverAddressRequest receiverAddressRequest = letterRequest.getReceiverAddressRequest();
 
-        ReceiverAddress receiverAddressEntity = new ReceiverAddress();
-        receiverAddressEntity.setPostCode(receiverAddressRequest.getPostCode());
-        receiverAddressEntity.setCity(receiverAddressRequest.getCity());
-        receiverAddressEntity.setStreet(receiverAddressRequest.getStreet());
-        receiverAddressEntity.setBuildingNumber(receiverAddressRequest.getBuildingNumber());
-        receiverAddressEntity.setFlatNumber(receiverAddressRequest.getFlatNumber());
+        ReceiverAddress receiverAddress = new ReceiverAddress();
+        receiverAddress.setPostCode(receiverAddressRequest.getPostCode());
+        receiverAddress.setCity(receiverAddressRequest.getCity());
+        receiverAddress.setStreet(receiverAddressRequest.getStreet());
+        receiverAddress.setBuildingNumber(receiverAddressRequest.getBuildingNumber());
+        receiverAddress.setFlatNumber(receiverAddressRequest.getFlatNumber());
 
-        CreatedAtRequest createdAtRequest = new CreatedAtRequest();
+        CreatedAtRequest createdAtRequest = letterRequest.getCreatedAtRequest();
 
-        CreatedAt createdAtEntity = new CreatedAt();
-        createdAtEntity.setCreateDate(createdAtRequest.getCreateDate());
+        CreatedAt createdAt = new CreatedAt();
+        createdAt.setCreateDate(createdAtRequest.getCreateDate());
 
-        UpdatedAtRequest updatedAtRequest = new UpdatedAtRequest();
+        UpdatedAtRequest updatedAtRequest = letterRequest.getUpdatedAtRequest();
 
-        UpdatedAt updatedAtEntity = new UpdatedAt();
-        updatedAtEntity.setUpdateDate(updatedAtRequest.getUpdateDate());
+        UpdatedAt updatedAt = new UpdatedAt();
+        updatedAt.setUpdateDate(updatedAtRequest.getUpdateDate());
 
-        InformationRequest informationRequest = new InformationRequest();
+        InformationRequest informationRequest = letterRequest.getInformationRequest();
 
-        Information informationEntity = new Information();
-        informationEntity.setSize(informationRequest.getSize());
-//        informationEntity.setType(information2.getType2());
+        Information information = new Information();
+        information.setSize(informationRequest.getSize());
+//        information.setType(information2.getType2());
 
         Letter letter = new Letter();
         letter.setSender(senderEntity);
-        letter.setSenderAddress(senderAddressEntity);
-        letter.setReceiver(receiverEntity);
-        letter.setReceiverAddress(receiverAddressEntity);
-        letter.setCreatedAt(createdAtEntity);
-        letter.setUpdatedAt(updatedAtEntity);
-        letter.setInformation(informationEntity);
+        letter.setSenderAddress(senderAddress);
+        letter.setReceiver(receiver);
+        letter.setReceiverAddress(receiverAddress);
+        letter.setCreatedAt(createdAt);
+        letter.setUpdatedAt(updatedAt);
+        letter.setInformation(information);
 
         return letter;
     }

@@ -2,10 +2,11 @@ package userregister.usercore;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 @SpringBootApplication
-public class UserRegisterApplication {
+public class UserCoreApplication {
     public static void main(String[] args) {
-        SpringApplication.run(UserRegisterApplication.class, args);
+        SpringApplication.run(UserCoreApplication.class, args);
     }
 }
 

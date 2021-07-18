@@ -19,14 +19,18 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    @PostMapping("/getLetters")
+
+    //TODO: sprawdz czy to Ci dziala
+    @GetMapping("/letters")
     public ResponseEntity<LettersByPhoneNumber> myLetters(@RequestParam String phoneNumber, @RequestParam String token) {
-
         ResponseEntity<LoginResponse> serviceLogin = loginService.getLogin(phoneNumber, token);
-
+//TODO: sprawdzic czy serviceLogin może być null - jak tak to w serviceLogin.getBody() poleci Ci npe
+        if(Objects.isNull(serviceLogin)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
         LoginResponse body = serviceLogin.getBody();
+        //serviceLogin.getStatusCode(); -> 200 mówi Ci, że operacja poszłą ok
         if (Objects.nonNull(body) && body.isLogged()) {
-
             return loginService.getLetters(phoneNumber);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

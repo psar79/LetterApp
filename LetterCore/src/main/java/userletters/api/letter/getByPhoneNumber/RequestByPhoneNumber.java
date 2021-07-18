@@ -11,4 +11,11 @@ public class RequestByPhoneNumber {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public RequestByPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public RequestByPhoneNumber() {
+    }
 }
