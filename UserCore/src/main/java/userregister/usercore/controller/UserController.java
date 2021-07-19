@@ -40,7 +40,7 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add")//Klient podaje nr telefonu (spradzamy czy 9-cyfrowy), jeżeli tak to generujemy cod(6-cyfr) oraz zapisujemy  telefon oraz cod do bazy Register
     public ResponseEntity<String> userRegister(@RequestParam String number) {
         if (!validator.validatePhoneNumber(number) || Objects.nonNull(registerManager.findByPhoneNumber(number))) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please, give proper number");
@@ -53,7 +53,8 @@ public class UserController {
         return ResponseEntity.ok().body(code);
     }
 
-    @PostMapping("/add2")
+    @PostMapping("/add2")//Klient podaje telfon i cod jeżeli prawidłowa ilość znaków, to szukamy w nr telefonu w bazie Register, a po znalzezieniu generujemy token
+    //ustawiamy obiekt User(telfon, token ) i zapisujemy obiekt User(telfonu, token) do bazy danych User,
     public ResponseEntity<String> userRegister2(@RequestParam String number, @RequestParam String code) {
         if (!validator2.validatePhoneNumberAndCode(number, code)) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please, give proper number");
@@ -72,7 +73,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login")//LOGOWANIE: Klient podaje nr telefonu i token, szukamy takiego nr w bazie User, jak znajdziemy to proównujemy token w biekcie user z tym z rq
+    //jak są takie same to ustawiamy obiekt na true(isLoggedResponse.setLogged(true)), a jak nie to zwracamy false (isLoggedResponse.setLogged(false))
     public ResponseEntity<IsLoggedResponse> userLogin(@RequestParam String number, @RequestParam String freshToken) {
         User user = registerManager.findBYPhoneNumber(number);
         IsLoggedResponse isLoggedResponse = new IsLoggedResponse();
