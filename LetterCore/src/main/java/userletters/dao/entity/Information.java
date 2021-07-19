@@ -9,7 +9,7 @@ public class Information {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int size;
-    private Type type;
+    private String type;
 
     @OneToOne(mappedBy = "information")
     private Letter letter;
@@ -17,10 +17,6 @@ public class Information {
     public Information() {
     }
 
-    public Information(int size, Type type) {
-        this.size = size;
-        this.type = type;
-    }
 
     public Long getId() {
         return id;
@@ -38,11 +34,11 @@ public class Information {
         this.size = size;
     }
 
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(String type) {
         this.type = type;
     }
 }

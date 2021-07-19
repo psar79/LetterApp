@@ -87,7 +87,7 @@ public class LetterController {
 
         List<Letter> result = new ArrayList<>();
         all.forEach(result::add);
-        if (Objects.isNull(result)) {
+        if (result.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         List<Letter> byPhoneNumber = result.stream()

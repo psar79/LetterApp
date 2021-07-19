@@ -2,49 +2,77 @@ package com.example.getLettersByReceiver;
 
 public class LetterByPhoneNumber {
 
-    private String surnameReceiverResponse;
-    private String nameReceiverResponse;
-    private String phoneNumberReceiverResponse;
-    private String emailReceiverResponse;
+    private Long id;
+    private SenderByPhoneResponse senderByPhoneResponse;
+    private SenderAddressByPhoneResponse senderAddressByPhoneResponse;
+    private ReceiverByPhoneResponse receiverByPhoneResponse;
+    private ReceiverAddressByPhoneResponse receiverAddressByPhoneResponse;
+    private CreatedAtByPhoneResponse createdAtByPhoneResponse;
+    private UpdatedAtByPhoneResponse updatedAtByPhoneResponse;
+    private InformationByPhoneResponse informationByPhoneResponse;
 
-    public String getSurnameReceiverResponse() {
-        return surnameReceiverResponse;
+    public Long getId() {
+        return id;
     }
 
-    public void setSurnameReceiverResponse(String surnameReceiverResponse) {
-        this.surnameReceiverResponse = surnameReceiverResponse;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getNameReceiverResponse() {
-        return nameReceiverResponse;
+    public SenderByPhoneResponse getSenderByPhoneResponse() {
+        return senderByPhoneResponse;
     }
 
-    public void setNameReceiverResponse(String nameReceiverResponse) {
-        this.nameReceiverResponse = nameReceiverResponse;
+    public void setSenderByPhoneResponse(SenderByPhoneResponse senderByPhoneResponse) {
+        this.senderByPhoneResponse = senderByPhoneResponse;
     }
 
-    public String getPhoneNumberReceiverResponse() {
-        return phoneNumberReceiverResponse;
+    public SenderAddressByPhoneResponse getSenderAddressByPhoneResponse() {
+        return senderAddressByPhoneResponse;
     }
 
-    public void setPhoneNumberReceiverResponse(String phoneNumberReceiverResponse) {
-        this.phoneNumberReceiverResponse = phoneNumberReceiverResponse;
+    public void setSenderAddressByPhoneResponse(SenderAddressByPhoneResponse senderAddressByPhoneResponse) {
+        this.senderAddressByPhoneResponse = senderAddressByPhoneResponse;
     }
 
-    public String getEmailReceiverResponse() {
-        return emailReceiverResponse;
+    public ReceiverByPhoneResponse getReceiverByPhoneResponse() {
+        return receiverByPhoneResponse;
     }
 
-    public void setEmailReceiverResponse(String emailReceiverResponse) {
-        this.emailReceiverResponse = emailReceiverResponse;
+    public void setReceiverByPhoneResponse(ReceiverByPhoneResponse receiverByPhoneResponse) {
+        this.receiverByPhoneResponse = receiverByPhoneResponse;
     }
 
-//    public LetterByPhoneNumberReceiverResponse getLetterByPhoneNumberReceiverResponse() {
-//        return letterByPhoneNumberReceiverResponse;
-//    }
-//
-//    public void setLetterByPhoneNumberReceiverResponse(LetterByPhoneNumberReceiverResponse letterByPhoneNumberReceiverResponse) {
-//        this.letterByPhoneNumberReceiverResponse = letterByPhoneNumberReceiverResponse;
-//    }
+    public ReceiverAddressByPhoneResponse getReceiverAddressByPhoneResponse() {
+        return receiverAddressByPhoneResponse;
+    }
+
+    public void setReceiverAddressByPhoneResponse(ReceiverAddressByPhoneResponse receiverAddressByPhoneResponse) {
+        this.receiverAddressByPhoneResponse = receiverAddressByPhoneResponse;
+    }
+
+    public CreatedAtByPhoneResponse getCreatedAtByPhoneResponse() {
+        return createdAtByPhoneResponse;
+    }
+
+    public void setCreatedAtByPhoneResponse(CreatedAtByPhoneResponse createdAtByPhoneResponse) {
+        this.createdAtByPhoneResponse = createdAtByPhoneResponse;
+    }
+
+    public UpdatedAtByPhoneResponse getUpdatedAtByPhoneResponse() {
+        return updatedAtByPhoneResponse;
+    }
+
+    public void setUpdatedAtByPhoneResponse(UpdatedAtByPhoneResponse updatedAtByPhoneResponse) {
+        this.updatedAtByPhoneResponse = updatedAtByPhoneResponse;
+    }
+
+    public InformationByPhoneResponse getInformationByPhoneResponse() {
+        return informationByPhoneResponse;
+    }
+
+    public void setInformationByPhoneResponse(InformationByPhoneResponse informationByPhoneResponse) {
+        this.informationByPhoneResponse = informationByPhoneResponse;
+    }
 }
 
