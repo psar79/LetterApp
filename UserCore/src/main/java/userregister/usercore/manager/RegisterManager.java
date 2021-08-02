@@ -29,7 +29,7 @@ public class RegisterManager {
         return registerRepository.findByPhoneNumber(phoneNumber);
     }
 
-    public User findBYPhoneNumber(String phoneNumber){
+    public User findUserByPhoneNumber(String phoneNumber){
         return  userRepository.findByPhoneNumber(phoneNumber);
     }
 }

@@ -5,22 +5,32 @@ import org.springframework.util.CollectionUtils;
 import userletters.api.letter.getAll.response.*;
 import userletters.dao.entity.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 public class LetterInfoMapper {
 
     public LetterInfo mapToResponse(List<Letter> letters) {
-        if (CollectionUtils.isEmpty(letters)) {
-            return null;
-        }
 
-        List<LetterResponse> letterResponse = letters.stream()
+        List<LetterResponse> letterResponse = Optional.ofNullable(letters)
+                .orElse(Collections.emptyList())
+                .stream()
                 .filter(Objects::nonNull)
                 .map(this::toLetterResponse)
                 .collect(Collectors.toList());
+
+// Można to opcjonalnie z tym co powyżej
+//        if (CollectionUtils.isEmpty(letters)) {
+//            return null;
+//        }
+//        List<LetterResponse> letterResponse = letters.stream()
+//                .filter(Objects::nonNull)
+//                .map(this::toLetterResponse)
+//                .collect(Collectors.toList());
 
         LetterInfo letterInfo = new LetterInfo();
         letterInfo.setLetterResponses(letterResponse);

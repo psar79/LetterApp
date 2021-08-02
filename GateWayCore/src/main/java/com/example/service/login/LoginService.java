@@ -43,7 +43,6 @@ public class LoginService {
     public ResponseEntity<LettersByPhoneNumber> getLetters(String phoneNumberFromRequest) {
         LetterCoreRequestByPhoneNumber request = new LetterCoreRequestByPhoneNumber();
         request.setPhoneNumber(phoneNumberFromRequest);
-
         String url = "http://localhost:8080/byPhoneNumber";
         return restTemplate.postForEntity(url, request, LettersByPhoneNumber.class);
     }

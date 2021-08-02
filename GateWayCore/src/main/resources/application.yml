@@ -4,5 +4,6 @@ server:
 hosts:
   user-core-url: ${USER_CORE_URL:http://localhost:8081}
 
+
 #flagi:
 #  usluga24H: &{USLUGA_24H:false}
