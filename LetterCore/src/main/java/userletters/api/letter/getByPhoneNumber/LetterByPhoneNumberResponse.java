@@ -1,6 +1,6 @@
 package userletters.api.letter.getByPhoneNumber;
 
-public class LetterByPhoneNumber {
+public class LetterByPhoneNumberResponse {
 
     private Long id;
     private SenderByPhoneResponse senderByPhoneResponse;

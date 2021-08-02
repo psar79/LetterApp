@@ -22,7 +22,7 @@ class LetterInfoMapperTest {
     }
 
     @Test
-    void checkIfResultISOkWhenSurnameIsGiven(){
+    void checkIfResultIsOkWhenSurnameIsGiven(){
 
         //given
         Sender sender = new Sender();
@@ -46,7 +46,7 @@ class LetterInfoMapperTest {
     }
 
     @Test
-    void checkIfResultIsOkWhenSurnamesIsGiven() {
+    void checkIfResultIsOkWhenSurnamesAreGiven() {
         //given
         Sender sender = new Sender();
         sender.setSurname("fdfdsf");

@@ -12,24 +12,24 @@ import java.util.stream.Collectors;
 @Component
 public class LetterByPhoneNumberMapper {
 
-    public LettersByPhoneNumber mapToLetterByPhoneNumberResponse (List<Letter> letters){
+    public LettersByPhoneNumberResponse mapToLetterByPhoneNumberResponse (List<Letter> letters){
 
         if(CollectionUtils.isEmpty(letters)){
             return null;
         }
-        List<LetterByPhoneNumber> letterByPhoneNumbers = letters.stream()
+        List<LetterByPhoneNumberResponse> letterByPhoneNumberResponses = letters.stream()
                 .filter(Objects::nonNull)
                 .map(this::toLetterByPhoneNumber)
                 .collect(Collectors.toList());
 
-        LettersByPhoneNumber response = new LettersByPhoneNumber();
-        response.setLetterByPhoneNumberReceiverList(letterByPhoneNumbers);
+        LettersByPhoneNumberResponse response = new LettersByPhoneNumberResponse();
+        response.setLetterByPhoneNumberReceiverList(letterByPhoneNumberResponses);
 
         return response;
 
     }
 
-    private LetterByPhoneNumber toLetterByPhoneNumber(Letter letter) {
+    private LetterByPhoneNumberResponse toLetterByPhoneNumber(Letter letter) {
 
         Sender sender = letter.getSender();
         SenderAddress senderAddress = letter.getSenderAddress();
@@ -74,14 +74,14 @@ public class LetterByPhoneNumberMapper {
         informationByPhoneResponse.setSize(information.getSize());
         informationByPhoneResponse.setType(information.getType());
 
-        LetterByPhoneNumber letterByPhoneNumber = new LetterByPhoneNumber();
-        letterByPhoneNumber.setSenderByPhoneResponse(senderByPhoneResponse);
-        letterByPhoneNumber.setSenderAddressByPhoneResponse(senderAddressByPhoneResponse);
-        letterByPhoneNumber.setReceiverByPhoneResponse(receiverByPhoneResponse);
-        letterByPhoneNumber.setReceiverAddressByPhoneResponse(receiverAddressByPhoneResponse);
-        letterByPhoneNumber.setCreatedAtByPhoneResponse(createdAtByPhoneResponse);
-        letterByPhoneNumber.setUpdatedAtByPhoneResponse(updatedAtByPhoneResponse);
-        letterByPhoneNumber.setInformationByPhoneResponse(informationByPhoneResponse);
+        LetterByPhoneNumberResponse letterByPhoneNumberResponse = new LetterByPhoneNumberResponse();
+        letterByPhoneNumberResponse.setSenderByPhoneResponse(senderByPhoneResponse);
+        letterByPhoneNumberResponse.setSenderAddressByPhoneResponse(senderAddressByPhoneResponse);
+        letterByPhoneNumberResponse.setReceiverByPhoneResponse(receiverByPhoneResponse);
+        letterByPhoneNumberResponse.setReceiverAddressByPhoneResponse(receiverAddressByPhoneResponse);
+        letterByPhoneNumberResponse.setCreatedAtByPhoneResponse(createdAtByPhoneResponse);
+        letterByPhoneNumberResponse.setUpdatedAtByPhoneResponse(updatedAtByPhoneResponse);
+        letterByPhoneNumberResponse.setInformationByPhoneResponse(informationByPhoneResponse);
 
 
 //        LetterByPhoneNumberReceiver letterByPhoneNumberReceiver = new LetterByPhoneNumberReceiver();
@@ -95,7 +95,7 @@ public class LetterByPhoneNumberMapper {
 //
 //        letterByPhoneNumber.setLetterByPhoneNumberReceiver(letterByPhoneNumberReceiver);
 
-        return letterByPhoneNumber;
+        return letterByPhoneNumberResponse;
 
     }
 }

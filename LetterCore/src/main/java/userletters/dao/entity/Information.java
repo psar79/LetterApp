@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Information {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int size;
     private String type;
