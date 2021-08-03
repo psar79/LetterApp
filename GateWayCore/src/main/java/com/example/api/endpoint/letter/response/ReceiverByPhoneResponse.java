@@ -1,8 +1,9 @@
-package com.example.getLettersByReceiver;
+package com.example.api.endpoint.letter.response;
 
-public class SenderByPhoneResponse {
+public class ReceiverByPhoneResponse {
 
     private String surnameByPhoneResponse;
+    private String nameByPhoneResponse;
     private String phoneNumberByPhoneResponse;
     private String emailByPhoneResponse;
 
@@ -12,6 +13,14 @@ public class SenderByPhoneResponse {
 
     public void setSurnameByPhoneResponse(String surnameByPhoneResponse) {
         this.surnameByPhoneResponse = surnameByPhoneResponse;
+    }
+
+    public String getNameByPhoneResponse() {
+        return nameByPhoneResponse;
+    }
+
+    public void setNameByPhoneResponse(String nameByPhoneResponse) {
+        this.nameByPhoneResponse = nameByPhoneResponse;
     }
 
     public String getPhoneNumberByPhoneResponse() {

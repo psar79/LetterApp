@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.api.endpoint.letter.request;
 
 public class LoginParam {
 

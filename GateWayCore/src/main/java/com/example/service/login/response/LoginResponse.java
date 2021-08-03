@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.service.login.response;
 
 public class LoginResponse {
 
