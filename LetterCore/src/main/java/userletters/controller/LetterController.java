@@ -17,7 +17,10 @@ import userletters.mapper.LetterInfoMapper;
 import userletters.mapper.LetterRequestMapper;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -102,5 +105,30 @@ public class LetterController {
         }
         return ResponseEntity.ok(lettersByPhoneNumberResponse);
     }
+
+//    @PostMapping("/status")
+//    public ResponseEntity<DeliveryStatus> changeStatus(@RequestBody RequestedId requestedId, @RequestBody RequestedStatus requestedStatus) {
+//
+//        if (Objects.isNull(requestedId) || Objects.isNull(letterManager.findById(requestedId.getId())) || Objects.isNull(requestedStatus)) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+//        LetterStatus letterStatus = new LetterStatus();
+//
+//        if (Objects.isNull(letterStatus.getPresent())) {
+//            letterStatus.setPresent(DeliveryStatus.PACZKA_NADANA);
+//        }
+//
+//
+//        Optional<Letter> letterById = letterManager.findById(requestedId.getId());
+//        letterById==requestedId;
+//
+//
+//        return ResponseEntity.ok();
+//    }
+//
+//        return ResponseEntity.ok().
+//
+//    build();
+//}
 }
 

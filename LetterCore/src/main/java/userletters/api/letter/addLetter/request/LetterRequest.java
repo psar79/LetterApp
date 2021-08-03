@@ -2,7 +2,7 @@ package userletters.api.letter.addLetter.request;
 
 import javax.validation.constraints.NotNull;
 
-public class  LetterRequest {
+public class LetterRequest {
 
     private Long id;
     @NotNull
