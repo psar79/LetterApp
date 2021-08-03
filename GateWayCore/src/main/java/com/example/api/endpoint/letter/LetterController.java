@@ -1,8 +1,9 @@
-package com.example.controller;
+package com.example.api.endpoint.letter;
 
-import com.example.getLettersByReceiver.LettersByPhoneNumber;
+import com.example.api.endpoint.letter.request.LoginParam;
+import com.example.service.login.response.LoginResponse;
+import com.example.api.endpoint.letter.response.LettersByPhoneNumber;
 import com.example.service.login.LoginService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,25 +11,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
 @RestController
-public class LoginController {
+public class LetterController {
 
     private final LoginService loginService;
 
-    @Autowired
-    public LoginController(LoginService loginService) {
+    public LetterController(LoginService loginService) {
         this.loginService = loginService;
     }
 
     @GetMapping("/letters")
     public ResponseEntity<LettersByPhoneNumber> myLetters(@RequestParam String phoneNumber, @RequestParam String token) {
-        ResponseEntity<LoginResponse> serviceLogin = loginService.getLogin(phoneNumber, token);
+        //walidacja phoneNumber i token ->
+        // czy phoneNumber jest 9 cyfrowy
+        // czy token jest 10 cyfrowy
+        ResponseEntity<LoginResponse> login = loginService.getLogin(phoneNumber, token);
 
-        if (Objects.isNull(serviceLogin)) {
+        if (Objects.isNull(login)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        LoginResponse body = serviceLogin.getBody();
-        //serviceLogin.getStatusCode(); -> 200 mówi Ci, że operacja poszłą ok
+        LoginResponse body = login.getBody();
+        //login.getStatusCode(); -> 200 mówi Ci, że operacja poszłą ok
         if (Objects.nonNull(body) && body.isLogged()) {
+            //TODO: returyn ResponsEntity....
             return loginService.getLetters(phoneNumber);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -36,6 +40,7 @@ public class LoginController {
 
     @PostMapping("/getLetters2/{number}/{token}")
     public String myLetters2(@PathVariable("number") String number, @PathVariable("token") String token) {
+        //TODO: add number and token validation
         ResponseEntity<LoginResponse> serviceLogin2 = loginService.getLogin2(number, token);
 
         LoginResponse body = serviceLogin2.getBody();
@@ -56,4 +61,3 @@ public class LoginController {
         return "Bad";
     }
 }
-
