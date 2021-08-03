@@ -38,10 +38,15 @@ public class Letter {
     @JoinColumn(name = "information_id", referencedColumnName = "id")
     private Information information;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "letterStatus_id", referencedColumnName = "id")
+    private LetterStatus letterStatus;
+
     public Letter() {
     }
 
-    public Letter(Sender sender, SenderAddress senderAddress, Receiver receiver, ReceiverAddress receiverAddress, CreatedAt createdAt, UpdatedAt updatedAt, Information information) {
+    public Letter(Long id, Sender sender, SenderAddress senderAddress, Receiver receiver, ReceiverAddress receiverAddress, CreatedAt createdAt, UpdatedAt updatedAt, Information information, LetterStatus letterStatus) {
+        this.id = id;
         this.sender = sender;
         this.senderAddress = senderAddress;
         this.receiver = receiver;
@@ -49,6 +54,7 @@ public class Letter {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.information = information;
+        this.letterStatus = letterStatus;
     }
 
     public Long getId() {
@@ -113,5 +119,13 @@ public class Letter {
 
     public void setInformation(Information information) {
         this.information = information;
+    }
+
+    public LetterStatus getLetterStatus() {
+        return letterStatus;
+    }
+
+    public void setLetterStatus(LetterStatus letterStatus) {
+        this.letterStatus = letterStatus;
     }
 }
