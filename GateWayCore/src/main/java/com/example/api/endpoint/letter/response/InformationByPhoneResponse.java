@@ -1,4 +1,4 @@
-package com.example.getLettersByReceiver;
+package com.example.api.endpoint.letter.response;
 
 public class InformationByPhoneResponse {
 

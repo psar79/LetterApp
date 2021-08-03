@@ -3,6 +3,8 @@ server:
 
 hosts:
   user-core-url: ${USER_CORE_URL:http://localhost:8081}
+  letter-core-url: ${LETTER_CORE_URL:http://localhost:8080}
+
 
 
 #flagi:
