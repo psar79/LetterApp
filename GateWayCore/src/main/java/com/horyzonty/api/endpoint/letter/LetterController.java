@@ -1,9 +1,11 @@
-package com.example.api.endpoint.letter;
+package com.horyzonty.api.endpoint.letter;
 
-import com.example.api.endpoint.letter.request.LoginParam;
-import com.example.service.login.response.LoginResponse;
-import com.example.api.endpoint.letter.response.LettersByPhoneNumber;
-import com.example.service.login.LoginService;
+import com.horyzonty.api.endpoint.letter.request.LoginParam;
+import com.horyzonty.api.endpoint.letter.response.Letters;
+import com.horyzonty.service.letter.LetterService;
+import com.horyzonty.util.Validator;
+import com.horyzonty.service.login.LoginService;
+import com.horyzonty.service.login.response.LoginResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,27 +15,29 @@ import java.util.Objects;
 @RestController
 public class LetterController {
 
+    private final LetterService letterService;
     private final LoginService loginService;
+    private final Validator validator;
 
-    public LetterController(LoginService loginService) {
+    public LetterController(LetterService letterService, LoginService loginService, Validator validator) {
+        this.letterService = letterService;
         this.loginService = loginService;
+        this.validator = validator;
     }
 
     @GetMapping("/letters")
-    public ResponseEntity<LettersByPhoneNumber> myLetters(@RequestParam String phoneNumber, @RequestParam String token) {
-        //walidacja phoneNumber i token ->
-        // czy phoneNumber jest 9 cyfrowy
-        // czy token jest 10 cyfrowy
+    public ResponseEntity<Letters> myLetters(@RequestParam String phoneNumber, @RequestParam String token) {
+        if(!validator.validatePhoneNumber(phoneNumber) || !validator.validateToken(token)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
         ResponseEntity<LoginResponse> login = loginService.getLogin(phoneNumber, token);
 
         if (Objects.isNull(login)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         LoginResponse body = login.getBody();
-        //login.getStatusCode(); -> 200 mówi Ci, że operacja poszłą ok
         if (Objects.nonNull(body) && body.isLogged()) {
-            //TODO: returyn ResponsEntity....
-            return loginService.getLetters(phoneNumber);
+                   return ResponseEntity.ok().body(letterService.getLetters(phoneNumber));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }

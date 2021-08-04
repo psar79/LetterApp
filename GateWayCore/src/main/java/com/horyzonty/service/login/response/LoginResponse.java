@@ -1,4 +1,4 @@
-package com.example.service.login.response;
+package com.horyzonty.service.login.response;
 
 public class LoginResponse {
 

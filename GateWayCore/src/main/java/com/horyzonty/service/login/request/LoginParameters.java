@@ -1,4 +1,4 @@
-package com.example.service.login.request;
+package com.horyzonty.service.login.request;
 
 public class LoginParameters {
 
