@@ -1,4 +1,4 @@
-package com.example.api.endpoint.letter.request;
+package com.horyzonty.api.endpoint.letter.request;
 
 public class LoginParam {
 

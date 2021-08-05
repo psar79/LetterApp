@@ -1,4 +1,4 @@
-package com.example.service.login;
+package com.horyzonty.service.letter.request;
 
 public class LetterCoreRequestByPhoneNumber {
 

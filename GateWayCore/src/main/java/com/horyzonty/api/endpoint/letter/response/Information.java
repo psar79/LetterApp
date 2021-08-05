@@ -1,6 +1,6 @@
-package com.example.api.endpoint.letter.response;
+package com.horyzonty.api.endpoint.letter.response;
 
-public class InformationByPhoneResponse {
+public class Information {
 
     private int size;
     private String type;
