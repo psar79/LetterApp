@@ -4,23 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import userletters.api.letter.addLetter.request.LetterRequest;
+import userletters.api.letter.addLetter.request.AddLetterRequest;
 import userletters.api.letter.getAll.response.LetterInfo;
 import userletters.api.letter.getAll.response.LetterResponse;
 import userletters.api.letter.getById.request.RequestById;
 import userletters.api.letter.getByPhoneNumber.LettersByPhoneNumberResponse;
-import userletters.api.letter.getByPhoneNumber.RequestByPhoneNumber;
+import userletters.api.letter.getByPhoneNumber.ByPhoneNumberRequest;
 import userletters.dao.entity.Letter;
+import userletters.dao.entity.Receiver;
 import userletters.manager.LetterManager;
 import userletters.mapper.LetterByPhoneNumberMapper;
 import userletters.mapper.LetterInfoMapper;
 import userletters.mapper.LetterRequestMapper;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import javax.validation.constraints.NotNull;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -39,12 +38,11 @@ public class LetterController {
         this.letterByPhoneNumberMapper = letterByPhoneNumberMapper;
     }
 
+
+//    @PostMapping("/letter")
     @PostMapping("/addLetter")
-    public ResponseEntity<Void> addLetter(@RequestBody @Valid LetterRequest letterRequest) {
-        if (Objects.isNull(letterRequest)) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-        Letter letter = letterRequestMapper.mapToLetter(letterRequest);
+    public ResponseEntity<Void> addLetter(@RequestBody @Valid @NotNull AddLetterRequest request) {
+        Letter letter = letterRequestMapper.mapToLetter(request);
         letterManager.add(letter);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -57,6 +55,7 @@ public class LetterController {
 
         List<Letter> result = new ArrayList<>();
         all.forEach(result::add);
+//        all.forEach(e -> result.add(e));
 
         LetterInfo letterInfo = letterInfoMapper.mapToResponse(result);
 
@@ -75,13 +74,27 @@ public class LetterController {
         return ResponseEntity.ok().body(letterResponseFromLetter);
     }
 
-    public LetterResponse getByPhoneNumber(@RequestParam String number) {
-        return null;
+    @PostMapping("/byPhoneNumber")
+    public ResponseEntity<LettersByPhoneNumberResponse> getByPhoneNumber(@RequestBody @Valid ByPhoneNumberRequest byPhoneNumberRequest) {
+
+        Letter letter = letterRequestMapper.mapToLetterByPhoneNumber(byPhoneNumberRequest);
+
+//        Optional<Receiver> receiverByPhoneNumber = letterManager.findReceiverByPhoneNumber(letter.getReceiver().getPhoneNumber());
+        Optional<Receiver> receiverByPhoneNumber = letterManager.findReceiverByPhoneNumber(byPhoneNumberRequest.getPhoneNumber());
+
+        if (!receiverByPhoneNumber.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        LettersByPhoneNumberResponse lettersByPhoneNumberResponse = letterByPhoneNumberMapper.mapReceiverPhoneNumberToLetterByPhoneNumberResponse(Collections.singletonList(receiverByPhoneNumber.get()));
+        return ResponseEntity.ok().body(lettersByPhoneNumberResponse);
     }
 
-    @PostMapping("/byPhoneNumber")
-    public ResponseEntity<LettersByPhoneNumberResponse> getByPhoneNumber(@RequestBody RequestByPhoneNumber requestByPhoneNumber) {
 
+
+
+    @PostMapping("/byPhoneNumberr")
+    public ResponseEntity<LettersByPhoneNumberResponse> getByPhoneNumberr(@RequestBody ByPhoneNumberRequest byPhoneNumberRequest) {
+        
         Iterable<Letter> all = letterManager.findAll();
 
         List<Letter> result = new ArrayList<>();
@@ -96,7 +109,7 @@ public class LetterController {
                 .filter(Objects::nonNull)
                 .filter(list -> Objects.nonNull(list.getReceiver()))
                 .filter(list -> Objects.nonNull(list.getReceiver().getPhoneNumber()))
-                .filter(list -> list.getReceiver().getPhoneNumber().equals(requestByPhoneNumber.getPhoneNumber()))
+                .filter(list -> list.getReceiver().getPhoneNumber().equals(byPhoneNumberRequest.getPhoneNumber()))
                 .collect(Collectors.toList());
 
         LettersByPhoneNumberResponse lettersByPhoneNumberResponse = letterByPhoneNumberMapper.mapToLetterByPhoneNumberResponse(letterByPhoneNumber);

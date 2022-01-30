@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import userletters.dao.LetterRepository;
 import userletters.dao.entity.Letter;
-
+import userletters.dao.entity.Receiver;
 
 import java.util.Optional;
 
@@ -32,6 +32,10 @@ public class LetterManager {
 
     public void deleteById(Long id){
         letterRepository.deleteById(id);
+    }
+
+    public Optional<Receiver> findReceiverByPhoneNumber(String phoneNumber){
+        return letterRepository.findByReceiverPhoneNumber(phoneNumber);
     }
 
 //    public Letter findByPhoneNumber2(String phoneNumber){return letterRepository.findByPhoneNumber(phoneNumber);}

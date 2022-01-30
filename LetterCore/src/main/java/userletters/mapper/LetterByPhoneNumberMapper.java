@@ -19,6 +19,7 @@ public class LetterByPhoneNumberMapper {
         }
         List<LetterByPhoneNumberResponse> letterByPhoneNumberResponses = letters.stream()
                 .filter(Objects::nonNull)
+//                .map(e->this.toLetterByPhoneNumber(e))
                 .map(this::toLetterByPhoneNumber)
                 .collect(Collectors.toList());
 
@@ -28,8 +29,38 @@ public class LetterByPhoneNumberMapper {
         return response;
 
     }
+    public LettersByPhoneNumberResponse mapReceiverPhoneNumberToLetterByPhoneNumberResponse (List<Receiver> receivers){
+
+        if(CollectionUtils.isEmpty(receivers)){
+            return null;
+        }
+        List<LetterByPhoneNumberResponse> letters = receivers.stream()
+                .filter(Objects::nonNull)
+                .map(this::fromReceiverToLetter)
+                .map(this::toLetterByPhoneNumber)
+                .collect(Collectors.toList());
+
+        LettersByPhoneNumberResponse response = new LettersByPhoneNumberResponse();
+        response.setLetterByPhoneNumberReceiverList(letters);
+
+        return response;
+    }
+
+    private Letter fromReceiverToLetter(Receiver receiver){
+        Letter letter = new Letter();
+        if(Objects.nonNull(receiver) && receiver.equals(letter.getReceiver())){
+        return letter;
+        }
+        return null;
+    }
+
+
 
     private LetterByPhoneNumberResponse toLetterByPhoneNumber(Letter letter) {
+
+        if(Objects.isNull(letter)){
+            return null;
+        }
 
         Sender sender = letter.getSender();
         SenderAddress senderAddress = letter.getSenderAddress();

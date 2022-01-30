@@ -34,4 +34,5 @@ public class LoginService {
         String url = userHostUrl + "/login3";
         return restTemplate.postForEntity(url, loginParameters, LoginResponse.class);
     }
+
 }

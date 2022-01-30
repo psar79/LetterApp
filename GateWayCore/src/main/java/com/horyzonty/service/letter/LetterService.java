@@ -8,16 +8,16 @@ import org.springframework.web.client.RestTemplate;
 public class LetterService {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String letterCoreUrl;
+    private final String letterHostUrl;
 
     public LetterService( @Value("${hosts.letter-core-url}") String letterCoreUrl) {
-        this.letterCoreUrl = letterCoreUrl;
+        this.letterHostUrl = letterCoreUrl;
     }
 
     public Letters getLetters(String phoneNumber) {
         LetterCoreRequestByPhoneNumber request = new LetterCoreRequestByPhoneNumber();
         request.setPhoneNumber(phoneNumber);
-        String url = letterCoreUrl + "/byPhoneNumber";
+        String url = letterHostUrl + "/byPhoneNumber";
         return (restTemplate.postForEntity(url, request, Letters.class)).getBody();
     }
 }

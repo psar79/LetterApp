@@ -24,7 +24,7 @@ public class UserController {
         if (!validator.validatePhoneNumber(number)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
+    return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 }

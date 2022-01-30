@@ -16,6 +16,7 @@ import userregister.usercore.utils.RefreshToken;
 import userregister.usercore.utils.Validator;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -37,12 +38,14 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @PostMapping("/add")//Klient podaje nr telefonu (spradzamy czy 9-cyfrowy), jeżeli tak to generujemy cod(6-cyfr) oraz zapisujemy  telefon oraz cod do bazy Register
+    @PostMapping("/add")//Klient podaje nr telefonu (spradzamy czy 9-cyfrowy), jeżeli tak to generujemy cod(6-cyfr) oraz zapisujemy  telefon oraz cod do bazy Register. W Postman aby wywołać http://localhost:8081/add?number=123456789
     public ResponseEntity<String> userRegister(@RequestParam String number) {
         if (!validator.validatePhoneNumber(number) || Objects.nonNull(registerManager.findByPhoneNumber(number))) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please, give proper number");
         }
         String code = codeGenerator.code();
+//        Optional.ofNullable(null);
+//        Optional.of(null);
 
         Register register = registerMapper.setRegister(number, code);
 
@@ -50,8 +53,8 @@ public class UserController {
         return ResponseEntity.ok().body(code);
     }
 
-    @PostMapping("/add2")//Klient podaje telfon i cod jeżeli prawidłowa ilość znaków, to szukamy w nr telefonu w bazie Register, a po znalzezieniu generujemy token
-    //ustawiamy obiekt User(telfon, token ) i zapisujemy obiekt User(telfonu, token) do bazy danych User,
+    @PostMapping("/add2")//Klient podaje telfon i code jeżeli prawidłowa ilość znaków, to szukamy w nr telefonu w bazie Register, a po znalzezieniu generujemy token
+    //ustawiamy obiekt User(telfon, token ) i zapisujemy obiekt User(telfonu, token) do bazy danych User,      W Postman aby wywołać localhost:8081/add2?number=123456789&code=123456
     public ResponseEntity<String> userRegister2(@RequestParam String number, @RequestParam String code) {
         if (!validator.validatePhoneNumberAndCode(number, code)) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please, give proper number");
@@ -70,9 +73,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
+    //localhost:8080/login?number=
     @GetMapping("/login")//LOGOWANIE: Klient podaje nr telefonu i token, szukamy takiego nr w bazie User, jak znajdziemy to proównujemy token w biekcie user z tym z rq
-    //jak są takie same to ustawiamy obiekt na true(isLoggedResponse.setLogged(true)), a jak nie to zwracamy false (isLoggedResponse.setLogged(false))
-    public ResponseEntity<IsLoggedResponse> userLogin(@RequestParam String number, @RequestParam String freshToken) {
+    //jak są takie same to ustawiamy obiekt na true(isLoggedResponse.setLogged(true)), a jak nie to zwracamy false (isLoggedResponse.setLogged(false))       W Postman Get'em dostaje status logged (true jeżeli wartoci podano ok) http://localhost:8081/login?number=502306418&freshToken=1234567899
+    public ResponseEntity<IsLoggedResponse> userLogin(@RequestParam String number, @RequestParam String freshToken) {                                                                                                            //localhost:8082/letters?phoneNumber=123456789&token=1234567899
         User user = registerManager.findUserByPhoneNumber(number);
         IsLoggedResponse isLoggedResponse = new IsLoggedResponse();
 
