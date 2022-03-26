@@ -9,14 +9,13 @@ import userregister.usercore.dao.entity.User;
 import userregister.usercore.manager.RegisterManager;
 import userregister.usercore.mapper.RegisterMapper;
 import userregister.usercore.mapper.UserMapper;
-import userregister.usercore.request.RequestLogin;
+import userregister.usercore.request.LoginRequest;
 import userregister.usercore.response.IsLoggedResponse;
 import userregister.usercore.utils.CodeGenerator;
 import userregister.usercore.utils.RefreshToken;
 import userregister.usercore.utils.Validator;
 
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -38,7 +37,7 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @PostMapping("/add")//Klient podaje nr telefonu (spradzamy czy 9-cyfrowy), jeżeli tak to generujemy cod(6-cyfr) oraz zapisujemy  telefon oraz cod do bazy Register. W Postman aby wywołać http://localhost:8081/add?number=123456789
+    @PostMapping("/add")//Klient podaje nr telefonu (spradzamy czy 9-cyfrowy), jeżeli tak to generujemy cod(6-cyfr) oraz zapisujemy nr telefonu oraz code do bazy Register. W Postman aby wywołać http://localhost:8081/add?number=123456789
     public ResponseEntity<String> userRegister(@RequestParam String number) {
         if (!validator.validatePhoneNumber(number) || Objects.nonNull(registerManager.findByPhoneNumber(number))) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please, give proper number");
@@ -104,14 +103,14 @@ public class UserController {
     }
 
     @PostMapping("/login3")
-    public ResponseEntity<IsLoggedResponse> userLogin3(@RequestBody RequestLogin requestLogin) {
-        User user = registerManager.findUserByPhoneNumber(requestLogin.getNumberParam());
+    public ResponseEntity<IsLoggedResponse> userLogin3(@RequestBody LoginRequest loginRequest) {
+        User user = registerManager.findUserByPhoneNumber(loginRequest.getNumberParam());
 
         IsLoggedResponse isLoggedResponse = new IsLoggedResponse();
 
-        if (Objects.nonNull(requestLogin.getNumberParam()) && Objects.nonNull(requestLogin.getFreshTokenParam())
+        if (Objects.nonNull(loginRequest.getNumberParam()) && Objects.nonNull(loginRequest.getFreshTokenParam())
                 && Objects.nonNull(user)
-                && user.getRefreshedToken().equals(requestLogin.getFreshTokenParam())) {
+                && user.getRefreshedToken().equals(loginRequest.getFreshTokenParam())) {
             isLoggedResponse.setLogged(true);
             return ResponseEntity.ok().body(isLoggedResponse);
         }

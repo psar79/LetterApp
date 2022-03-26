@@ -1,8 +1,9 @@
 package com.horyzonty.service.letter;
 
 import com.horyzonty.api.endpoint.letter.response.Letters;
-import com.horyzonty.service.letter.request.LetterCoreRequestByPhoneNumber;
+import com.horyzonty.service.letter.request.PhoneNumberRequest;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class LetterService {
@@ -14,10 +15,15 @@ public class LetterService {
         this.letterHostUrl = letterCoreUrl;
     }
 
-    public Letters getLetters(String phoneNumber) {
-        LetterCoreRequestByPhoneNumber request = new LetterCoreRequestByPhoneNumber();
+    public ResponseEntity<Letters> getLetters(String phoneNumber) {
+        PhoneNumberRequest request = new PhoneNumberRequest();
         request.setPhoneNumber(phoneNumber);
-        String url = letterHostUrl + "/byPhoneNumber";
-        return (restTemplate.postForEntity(url, request, Letters.class)).getBody();
+        String url = letterHostUrl + "/phoneNumber";
+        return (restTemplate.postForEntity(url, request, Letters.class));
+    }
+
+    public ResponseEntity<Letters> getLetters(Long index){
+        String url = letterHostUrl + "/id";
+        return (restTemplate.getForEntity(url, Letters.class));
     }
 }

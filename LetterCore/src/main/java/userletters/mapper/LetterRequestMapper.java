@@ -13,7 +13,7 @@ import java.util.Objects;
 @Component
 public class LetterRequestMapper {
 
-    public Letter mapToLetter(AddLetterRequest request) {
+    public Letter mapToLetter(LetterRequest request) {
 //        if (Objects.isNull(request) || Objects.isNull(request.getSenderRequest()) || Objects.isNull(request.getSenderAddressRequest())
 //        || Objects.isNull(request.getReceiverRequest()) || Objects.isNull(request.getReceiverAddressRequest())
 //        || Objects.isNull(request.getCreatedAtRequest()) || Objects.isNull(request.getUpdatedAtRequest())
@@ -85,7 +85,6 @@ public class LetterRequestMapper {
         if(Objects.isNull(requestById) || requestById.getId()<0){
             return null;
         }
-
         LetterResponse letterResponse = new LetterResponse();
         letterResponse.setId(requestById.getId());
 

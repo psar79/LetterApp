@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 
 public class SenderRequest {
 
-    @NotBlank
+    @NotBlank                      // " " to jest Blank ale też jest @NoteEmpty i @NotNull ,   "" to jest Empty i Blank ale nie jest @NotNull  ,  null - to jest Null, Blank i Empty ale nie jest @NotNull, @NotEmpty i @NotBlank
     private String surname2;
     @NotBlank
     private String phoneNumber2;

@@ -8,6 +8,7 @@ import userletters.mapper.LetterInfoMapper;
 
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,8 +36,7 @@ class LetterInfoMapperTest {
         letter.setCreatedAt(new CreatedAt());
         letter.setUpdatedAt(new UpdatedAt());
         letter.setInformation(new Information());
-        List<Letter> letters = Arrays.asList(letter);
-
+        List<Letter> letters = Collections.singletonList(letter);
 
         //when
         LetterInfo letterInfo = letterInfoMapper.mapToResponse(letters);

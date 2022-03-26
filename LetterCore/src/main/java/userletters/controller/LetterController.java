@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import userletters.api.letter.addLetter.request.AddLetterRequest;
+import userletters.api.letter.addLetter.request.LetterRequest;
 import userletters.api.letter.getAll.response.LetterInfo;
 import userletters.api.letter.getAll.response.LetterResponse;
 import userletters.api.letter.getById.request.RequestById;
-import userletters.api.letter.getByPhoneNumber.LettersByPhoneNumberResponse;
 import userletters.api.letter.getByPhoneNumber.ByPhoneNumberRequest;
+import userletters.api.letter.getByPhoneNumber.LettersByPhoneNumberResponse;
 import userletters.dao.entity.Letter;
-import userletters.dao.entity.Receiver;
 import userletters.manager.LetterManager;
 import userletters.mapper.LetterByPhoneNumberMapper;
 import userletters.mapper.LetterInfoMapper;
@@ -19,8 +18,11 @@ import userletters.mapper.LetterRequestMapper;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 public class LetterController {
@@ -38,10 +40,9 @@ public class LetterController {
         this.letterByPhoneNumberMapper = letterByPhoneNumberMapper;
     }
 
-
-//    @PostMapping("/letter")
+    //    @PostMapping("/letter")
     @PostMapping("/addLetter")
-    public ResponseEntity<Void> addLetter(@RequestBody @Valid @NotNull AddLetterRequest request) {
+    public ResponseEntity<Void> addLetter(@RequestBody @Valid @NotNull LetterRequest request) {
         Letter letter = letterRequestMapper.mapToLetter(request);
         letterManager.add(letter);
 
@@ -50,22 +51,22 @@ public class LetterController {
 
     @GetMapping("/getAll")
     public ResponseEntity<LetterInfo> getAll() {
-
         Iterable<Letter> all = letterManager.findAll();
-
-        List<Letter> result = new ArrayList<>();
-        all.forEach(result::add);
+//        List<Letter> result = new ArrayList<>();
+//        all.forEach(result::add);
 //        all.forEach(e -> result.add(e));
 
+        List<Letter> result = StreamSupport.stream(all.spliterator(), false)
+                .collect(Collectors.toList());
         LetterInfo letterInfo = letterInfoMapper.mapToResponse(result);
 
         return ResponseEntity.status(HttpStatus.OK).body(letterInfo);
     }
 
-    @GetMapping("/byId")
-    public ResponseEntity<LetterResponse> getById(@RequestBody RequestById requestById) {
-        LetterResponse letterResponse = letterRequestMapper.mapToLetterResponseById(requestById); // To chyba nie potrzbne
-        Optional<Letter> LetterbyId = letterManager.findById(letterResponse.getId());             // A to chyba powinno być tak    Optional<Letter> LetterbyId = letterManager.findById(requestById.getId());
+    @GetMapping("/id")
+    public ResponseEntity<LetterResponse> getById(@RequestBody RequestById request) {
+        LetterResponse letterResponse = letterRequestMapper.mapToLetterResponseById(request); // To chyba nie potrzbne
+        Optional<Letter> LetterbyId = letterManager.findById(letterResponse.getId());             // A to chyba powinno być tak    Optional<Letter> LetterbyId = letterManager.findById(request.getId());
 
         if (!LetterbyId.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -74,31 +75,54 @@ public class LetterController {
         return ResponseEntity.ok().body(letterResponseFromLetter);
     }
 
-    @PostMapping("/byPhoneNumber")
-    public ResponseEntity<LettersByPhoneNumberResponse> getByPhoneNumber(@RequestBody @Valid ByPhoneNumberRequest byPhoneNumberRequest) {
 
-        Letter letter = letterRequestMapper.mapToLetterByPhoneNumber(byPhoneNumberRequest);
+    // Ten serwis powinien zwrócić listę wszystkich letterów dla zadanego w request numeru telefonu
+    // RQ: nr telefonu
+    // RS: List<Letter>
 
-//        Optional<Receiver> receiverByPhoneNumber = letterManager.findReceiverByPhoneNumber(letter.getReceiver().getPhoneNumber());
-        Optional<Receiver> receiverByPhoneNumber = letterManager.findReceiverByPhoneNumber(byPhoneNumberRequest.getPhoneNumber());
+    // 1)walidacja -> czy w RQ podany nr teleofnu jest poprawny tzn:
+    //  że ma określoną długość (np 9 cyfr)
+    //  że skłąda sie tylko z cyfr
 
-        if (!receiverByPhoneNumber.isPresent()) {
+    // 2) Mając nr telefony z RQ, wykorzystuję LetterManagera, któremu podaję nr telefon a on zwróci mi listę wszystkich letterów dla podanego nr telefonu
+    // mają odpowiedz od LetterManagera muszę zmapować całą listę na listę odpowiedzi tzn:
+    // -> LetterManager zwróci mi listę moich wewnęßrznych modeli, a tego nie mogę zwrócić w RS z mojego serwisu
+    // -> dlatego muszę zmapować na odpowiedż RS
+
+    @PostMapping("/phoneNumber")
+//    @GetMapping("/receiver/{phoneNumber}")
+//    public ResponseEntity<LettersByPhoneNumberResponse> getByPhoneNumber(@PathVariable String phoneNumber) {
+    public ResponseEntity<LettersByPhoneNumberResponse> getByPhoneNumber(@RequestBody @Valid ByPhoneNumberRequest request) {
+        final String phoneNumber = request.getPhoneNumber();
+        Optional<List<Letter>> letters = letterManager.findReceiverByPhoneNumber(phoneNumber);
+        if (!letters.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        LettersByPhoneNumberResponse lettersByPhoneNumberResponse = letterByPhoneNumberMapper.mapReceiverPhoneNumberToLetterByPhoneNumberResponse(Collections.singletonList(receiverByPhoneNumber.get()));
-        return ResponseEntity.ok().body(lettersByPhoneNumberResponse);
+
+        LettersByPhoneNumberResponse response = letterByPhoneNumberMapper.mapToLetterByPhoneNumberResponse(letters.get());
+        return ResponseEntity.ok().body(response);
+
+
+//        Letter letter = letterRequestMapper.mapToLetterByPhoneNumber(request);
+
+//        Optional<Receiver> receiverByPhoneNumber = letterManager.findReceiverByPhoneNumber(letter.getReceiver().getPhoneNumber());
+//        Optional<Receiver> receiverByPhoneNumber = letterManager.findReceiverByPhoneNumber(phoneNumber);
+
+//        if (!receiverByPhoneNumber.isPresent()) {
+//        }
+//        LettersByPhoneNumberResponse lettersByPhoneNumberResponse = letterByPhoneNumberMapper.mapReceiverPhoneNumberToLetterByPhoneNumberResponse(Collections.singletonList(receiverByPhoneNumber.get()));
+//        return ResponseEntity.ok().body(lettersByPhoneNumberResponse);
     }
 
 
-
-
-    @PostMapping("/byPhoneNumberr")
+    @PostMapping("/phoneNumberr")
     public ResponseEntity<LettersByPhoneNumberResponse> getByPhoneNumberr(@RequestBody ByPhoneNumberRequest byPhoneNumberRequest) {
-        
+
         Iterable<Letter> all = letterManager.findAll();
 
-        List<Letter> result = new ArrayList<>();
-        all.forEach(result::add);
+        List<Letter> result = StreamSupport.stream(all.spliterator(), false).collect(Collectors.toList());
+//        List<Letter> result = new ArrayList<>();
+//        all.forEach(result::add);
 //        for (Letter str : all){    ???
 //            result.add(str);       ???
 //        }                          ???

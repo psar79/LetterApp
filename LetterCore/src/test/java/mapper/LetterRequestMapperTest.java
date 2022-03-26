@@ -9,7 +9,7 @@ import userletters.mapper.LetterRequestMapper;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-class AddLetterRequestMapperTest {
+class LetterRequestMapperTest {
 
     private LetterRequestMapper letterRequestMapper;
 
@@ -26,17 +26,17 @@ class AddLetterRequestMapperTest {
         SenderRequest senderRequest = new SenderRequest();
         senderRequest.setSurname2("Wojciech");
 
-        AddLetterRequest addLetterRequest = new AddLetterRequest();
-        addLetterRequest.setSenderRequest(senderRequest);
-        addLetterRequest.setSenderAddressRequest(new SenderAddressRequest());
-        addLetterRequest.setReceiverRequest(new ReceiverRequest());
-        addLetterRequest.setReceiverAddressRequest(new ReceiverAddressRequest());
-        addLetterRequest.setInformationRequest(new InformationRequest());
-        addLetterRequest.setCreatedAtRequest(new CreatedAtRequest());
-        addLetterRequest.setUpdatedAtRequest(new UpdatedAtRequest());
+        LetterRequest letterRequest = new LetterRequest();
+        letterRequest.setSenderRequest(senderRequest);
+        letterRequest.setSenderAddressRequest(new SenderAddressRequest());
+        letterRequest.setReceiverRequest(new ReceiverRequest());
+        letterRequest.setReceiverAddressRequest(new ReceiverAddressRequest());
+        letterRequest.setInformationRequest(new InformationRequest());
+        letterRequest.setCreatedAtRequest(new CreatedAtRequest());
+        letterRequest.setUpdatedAtRequest(new UpdatedAtRequest());
 
         //when
-        Letter result = letterRequestMapper.mapToLetter(addLetterRequest);
+        Letter result = letterRequestMapper.mapToLetter(letterRequest);
 
         //Then
         assertEquals("Wojciech", result.getSender().getSurname());
@@ -55,11 +55,11 @@ class AddLetterRequestMapperTest {
     void returnNullWhenLetterRequestSender2IsNull() {
 
         //given
-        AddLetterRequest addLetterRequest = new AddLetterRequest();
-        addLetterRequest.setSenderRequest(null);
+        LetterRequest letterRequest = new LetterRequest();
+        letterRequest.setSenderRequest(null);
 
         //when
-        Letter letter = letterRequestMapper.mapToLetter(addLetterRequest);
+        Letter letter = letterRequestMapper.mapToLetter(letterRequest);
 
         //then
         assertNull(letter);
@@ -71,11 +71,11 @@ class AddLetterRequestMapperTest {
         //given
         SenderRequest senderRequest = new SenderRequest();
         senderRequest.setSurname2(null);
-        AddLetterRequest addLetterRequest = new AddLetterRequest();
-        addLetterRequest.setSenderRequest(senderRequest);
+        LetterRequest letterRequest = new LetterRequest();
+        letterRequest.setSenderRequest(senderRequest);
 
         //when
-        Letter letter = letterRequestMapper.mapToLetter(addLetterRequest);
+        Letter letter = letterRequestMapper.mapToLetter(letterRequest);
 
         //then
         assertNull(letter);

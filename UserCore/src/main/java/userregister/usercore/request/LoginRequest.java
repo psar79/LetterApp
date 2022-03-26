@@ -1,14 +1,14 @@
 package userregister.usercore.request;
 
-public class RequestLogin {
+public class LoginRequest {
 
     private String numberParam;
     private String freshTokenParam;
 
-    public RequestLogin() {
+    public LoginRequest() {
     }
 
-    public RequestLogin(String numberParam, String freshTokenParam) {
+    public LoginRequest(String numberParam, String freshTokenParam) {
         this.numberParam = numberParam;
         this.freshTokenParam = freshTokenParam;
     }

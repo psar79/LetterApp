@@ -12,7 +12,9 @@ import java.util.Optional;
 @Repository
 public interface LetterRepository extends CrudRepository<Letter, Long> {
 
-    Optional<Receiver> findByReceiverPhoneNumber(String number);
+    Optional<List<Letter>> findByReceiverPhoneNumber(String number);
+    Optional<Letter> findByReceiverPhoneNumberAndSurname(String number, String surname);
+
 
 //    public Letter findByName(String name);
 //    public Letter findByNameAndAge(String name, Integer age);
