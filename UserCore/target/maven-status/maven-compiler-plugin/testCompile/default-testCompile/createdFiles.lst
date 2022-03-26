@@ -1,6 +1,0 @@
-userregister\usercore\mapper\UserMapperTest.class
-userregister\usercore\utils\RefreshTokenTest.class
-userregister\usercore\mapper\RegisterMapperTest.class
-userregister\usercore\utils\CodeGeneratorTest.class
-userregister\usercore\utils\Validator2Test.class
-userregister\usercore\utils\ValidatorTest.class
