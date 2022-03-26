@@ -1,0 +1,11 @@
+server:
+  port: 8082
+
+hosts:
+  user-core-url: ${USER_CORE_URL:http://localhost:8081}
+  letter-core-url: ${LETTER_CORE_URL:http://localhost:8080}
+
+
+
+#flagi:
+#  usluga24H: &{USLUGA_24H:false}
