@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class Validator2Test {
 
     private Validator validator;
+    private static String NUMBER = "23212";
 
     @BeforeEach
     void setUp(){
@@ -42,7 +43,7 @@ class Validator2Test {
     public void checkIfFalseWhenStringIsLessDigits(){
 
         //when
-        boolean result = validator.validatePhoneNumber("23212");
+        boolean result = validator.validatePhoneNumber(NUMBER);
 
         //then
         assertFalse(result);
