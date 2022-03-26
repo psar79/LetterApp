@@ -1,0 +1,14 @@
+userregister\usercore\dao\entity\Register.class
+userregister\usercore\manager\RegisterManager.class
+userregister\usercore\response\IsLoggedResponse.class
+userregister\usercore\request\RequestLogin.class
+userregister\usercore\mapper\RegisterMapper.class
+userregister\usercore\mapper\UserMapper.class
+userregister\usercore\utils\RefreshToken.class
+userregister\usercore\dao\entity\UserRepository.class
+userregister\usercore\UserCoreApplication.class
+userregister\usercore\dao\entity\User.class
+userregister\usercore\dao\entity\RegisterRepository.class
+userregister\usercore\utils\CodeGenerator.class
+userregister\usercore\controller\UserController.class
+userregister\usercore\utils\Validator.class
