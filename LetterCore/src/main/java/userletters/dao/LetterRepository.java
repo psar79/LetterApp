@@ -12,8 +12,6 @@ import java.util.Optional;
 @Repository
 public interface LetterRepository extends CrudRepository<Letter, Long> {
 
-    static final String dom = "A";
-
     Optional<List<Letter>> findByReceiverPhoneNumber(String number);
     Optional<Letter> findByReceiverPhoneNumberAndSurname(String number, String surname);
 
