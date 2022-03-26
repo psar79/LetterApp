@@ -18,12 +18,16 @@ class RegisterMapperTest {
 
     @Test
     void checkIfWorkingWhenHappyPath() {
+        //given
+        String number = "232";
+        String code = "23333";
+
         //when
-        Register result = registerMapper.setRegister("r23231", "21321");
+        Register register = registerMapper.setRegister(number, code);
 
         //then
-        assertEquals("r23231", result.getPhoneNumber());
-        assertEquals("21321", result.getCode());
+        assertEquals("232", register.getPhoneNumber());
+        assertEquals("23333", register.getCode());
     }
 
     @Test
@@ -51,6 +55,7 @@ class RegisterMapperTest {
         //then
         assertNull(result);
     }
+
     @Test
     void shouldReturnNullWhenNumberAndCodeIsNull() {
 

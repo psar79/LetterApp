@@ -1,16 +1,15 @@
 package com.horyzonty.service.login.response;
 
-public class LoginResponse {
+public class PhoneNumberAndCodeResponse {
 
     private boolean logged;
 
-    public LoginResponse(boolean logged) {
+    public PhoneNumberAndCodeResponse(boolean logged) {
         this.logged = logged;
     }
 
-    public LoginResponse() {
+    public PhoneNumberAndCodeResponse() {
     }
-
     public boolean isLogged() {
         return logged;
     }

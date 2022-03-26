@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Validator {
 
     public boolean validatePhoneNumber(String number) {
-        return Objects.nonNull(number) && number.length() == 9 && number.matches("\\d{9}");
+        return Objects.nonNull(number) && number.matches("\\d{9}");
     }
 
     public boolean validatePhoneNumberAndCode(String phoneNumber, String code) {
@@ -16,4 +16,9 @@ public class Validator {
                 && phoneNumber.length() == 9 && phoneNumber.matches("\\d{9}")
                 && code.length() == 6 && code.matches("\\d{6}"));
     }
+
+//    public static void main(String[] args) {
+//        Validator validator = new Validator();
+//        System.out.println(validator.validatePhoneNumber("123456789"));
+//    }
 }

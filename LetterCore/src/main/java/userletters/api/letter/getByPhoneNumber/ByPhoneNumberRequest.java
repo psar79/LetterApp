@@ -1,7 +1,13 @@
 package userletters.api.letter.getByPhoneNumber;
 
-public class RequestByPhoneNumber {
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
+
+public class ByPhoneNumberRequest {
+
+    @NotBlank
+    @Length(min = 9, max = 9)
     private String phoneNumber;
 
     public String getPhoneNumber() {
@@ -12,10 +18,10 @@ public class RequestByPhoneNumber {
         this.phoneNumber = phoneNumber;
     }
 
-    public RequestByPhoneNumber(String phoneNumber) {
+    public ByPhoneNumberRequest(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public RequestByPhoneNumber() {
+    public ByPhoneNumberRequest() {
     }
 }

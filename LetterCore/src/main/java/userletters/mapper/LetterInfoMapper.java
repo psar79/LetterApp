@@ -1,7 +1,6 @@
 package userletters.mapper;
 
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import userletters.api.letter.getAll.response.*;
 import userletters.dao.entity.*;
 
@@ -41,77 +40,64 @@ public class LetterInfoMapper {
     }
 
     public LetterResponse toLetterResponse(Letter letter) {
-
-        if(Objects.isNull(letter) || Objects.isNull(letter.getSender()) || Objects.isNull(letter.getSenderAddress())
-                || Objects.isNull(letter.getReceiver()) || Objects.isNull(letter.getReceiverAddress()) || Objects.isNull(letter.getCreatedAt())
-                || Objects.isNull(letter.getUpdatedAt()) ){
-
+        if (Objects.isNull(letter)) {
             return null;
         }
-
+        LetterResponse letterResponse = new LetterResponse();
         Sender sender = letter.getSender();
-
-        SenderResponse senderResponse = new SenderResponse();
-        senderResponse.setSurnameResponse(sender.getSurname());
-        senderResponse.setPhoneNumberResponse(sender.getPhoneNumber());
-        senderResponse.setEmailResponse(sender.getEmail());
-
-
+        if (Objects.nonNull(sender)) {
+            SenderResponse senderResponse = new SenderResponse();
+            senderResponse.setSurnameResponse(sender.getSurname());
+            senderResponse.setPhoneNumberResponse(sender.getPhoneNumber());
+            senderResponse.setEmailResponse(sender.getEmail());
+            letterResponse.setSenderResponse(senderResponse);
+        }
         SenderAddress senderAddress = letter.getSenderAddress();
-
-        SenderAddressResponse senderAddressResponse = new SenderAddressResponse();
-        senderAddressResponse.setBuildingNumberResponse(senderAddress.getBuildingNumber());
-        senderAddressResponse.setCityResponse(senderAddress.getCity());
-        senderAddressResponse.setFlatNumberResponse(senderAddress.getFlatNumber());
-        senderAddressResponse.setPostcodeResponse(senderAddress.getPostcode());
-
-
+        if (Objects.nonNull(senderAddress)) {
+            SenderAddressResponse senderAddressResponse = new SenderAddressResponse();
+            senderAddressResponse.setBuildingNumberResponse(senderAddress.getBuildingNumber());
+            senderAddressResponse.setCityResponse(senderAddress.getCity());
+            senderAddressResponse.setFlatNumberResponse(senderAddress.getFlatNumber());
+            senderAddressResponse.setPostcodeResponse(senderAddress.getPostcode());
+            letterResponse.setSenderAddressResponse(senderAddressResponse);
+        }
         Receiver receiver = letter.getReceiver();
-
-        ReceiverResponse receiverResponse = new ReceiverResponse();
-        receiverResponse.setNameResponse(receiver.getName());
-        receiverResponse.setSurnameResponse(receiver.getSurname());
-        receiverResponse.setEmailResponse(receiver.getEmail());
-        receiverResponse.setPhoneNumberResponse(receiver.getPhoneNumber());
-
-
+        if (Objects.nonNull(receiver)) {
+            ReceiverResponse receiverResponse = new ReceiverResponse();
+            receiverResponse.setNameResponse(receiver.getName());
+            receiverResponse.setSurnameResponse(receiver.getSurname());
+            receiverResponse.setEmailResponse(receiver.getEmail());
+            receiverResponse.setPhoneNumberResponse(receiver.getPhoneNumber());
+            letterResponse.setReceiverResponse(receiverResponse);
+        }
         ReceiverAddress receiverAddress = letter.getReceiverAddress();
-
-        ReceiverAddressResponse receiverAddressResponse = new ReceiverAddressResponse();
-        receiverAddressResponse.setBuildingNumberResponse(receiverAddress.getBuildingNumber());
-        receiverAddressResponse.setCityResponse(receiverAddress.getCity());
-        receiverAddressResponse.setFlatNumberResponse(receiverAddress.getFlatNumber());
-        receiverAddressResponse.setPostCodeResponse(receiverAddress.getPostCode());
-
-
+        if (Objects.nonNull(receiverAddress)) {
+            ReceiverAddressResponse receiverAddressResponse = new ReceiverAddressResponse();
+            receiverAddressResponse.setBuildingNumberResponse(receiverAddress.getBuildingNumber());
+            receiverAddressResponse.setCityResponse(receiverAddress.getCity());
+            receiverAddressResponse.setFlatNumberResponse(receiverAddress.getFlatNumber());
+            receiverAddressResponse.setPostCodeResponse(receiverAddress.getPostCode());
+            letterResponse.setReceiverAddressResponse(receiverAddressResponse);
+        }
         CreatedAt createdAt = letter.getCreatedAt();
-
-        CreatedAtResponse createdAtResponse = new CreatedAtResponse();
-        createdAtResponse.setCreateDateResponse(createdAt.getCreateDate());
-
-
+        if (Objects.nonNull(createdAt)) {
+            CreatedAtResponse createdAtResponse = new CreatedAtResponse();
+            createdAtResponse.setCreateDateResponse(createdAt.getCreateDate());
+            letterResponse.setCreatedAtResponse(createdAtResponse);
+        }
         UpdatedAt updatedAt = letter.getUpdatedAt();
-
-        UpdatedAtResponse updatedAtResponse = new UpdatedAtResponse();
-        updatedAtResponse.setUpdateDateResponse(updatedAt.getUpdateDate());
-
+        if (Objects.nonNull(updatedAt)) {
+            UpdatedAtResponse updatedAtResponse = new UpdatedAtResponse();
+            updatedAtResponse.setUpdateDateResponse(updatedAt.getUpdateDate());
+            letterResponse.setUpdatedAtResponse(updatedAtResponse);
+        }
 
         Information information = letter.getInformation();
-
-        InformationResponse informationResponse = new InformationResponse();
-        informationResponse.setSizeResponse(information.getSize());
-//        informationResponse.setTypeResponse(information.);
-
-        LetterResponse letterResponse = new LetterResponse();
-        letterResponse.setId(letter.getId());
-        letterResponse.setSenderResponse(senderResponse);
-        letterResponse.setSenderAddressResponse(senderAddressResponse);
-        letterResponse.setReceiverResponse(receiverResponse);
-        letterResponse.setReceiverAddressResponse(receiverAddressResponse);
-        letterResponse.setCreatedAtResponse(createdAtResponse);
-        letterResponse.setUpdatedAtResponse(updatedAtResponse);
-        letterResponse.setInformationResponse(informationResponse);
-
+        if (Objects.nonNull(information)) {
+            InformationResponse informationResponse = new InformationResponse();
+            informationResponse.setSizeResponse(information.getSize());
+            letterResponse.setInformationResponse(informationResponse);
+        }
         return letterResponse;
     }
 }

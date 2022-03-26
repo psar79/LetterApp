@@ -1,6 +1,6 @@
 package com.horyzonty.service.letter.request;
 
-public class LetterCoreRequestByPhoneNumber {
+public class PhoneNumberRequest {
 
     private String phoneNumber;
 

@@ -4,10 +4,8 @@ import org.springframework.stereotype.Component;
 import userletters.api.letter.addLetter.request.*;
 import userletters.api.letter.getAll.response.LetterResponse;
 import userletters.api.letter.getAll.response.ReceiverResponse;
-import userletters.api.letter.getAll.response.SenderAddressResponse;
-import userletters.api.letter.getAll.response.SenderResponse;
 import userletters.api.letter.getById.request.RequestById;
-import userletters.api.letter.getByPhoneNumber.RequestByPhoneNumber;
+import userletters.api.letter.getByPhoneNumber.ByPhoneNumberRequest;
 import userletters.dao.entity.*;
 
 import java.util.Objects;
@@ -15,22 +13,22 @@ import java.util.Objects;
 @Component
 public class LetterRequestMapper {
 
-    public Letter mapToLetter(LetterRequest letterRequest) {
-        if (Objects.isNull(letterRequest) || Objects.isNull(letterRequest.getSenderRequest()) || Objects.isNull(letterRequest.getSenderAddressRequest())
-        || Objects.isNull(letterRequest.getReceiverRequest()) || Objects.isNull(letterRequest.getReceiverAddressRequest())
-        || Objects.isNull(letterRequest.getCreatedAtRequest()) || Objects.isNull(letterRequest.getUpdatedAtRequest())
-                || Objects.isNull(letterRequest.getInformationRequest()))  {
-            return null;
-        }
+    public Letter mapToLetter(LetterRequest request) {
+//        if (Objects.isNull(request) || Objects.isNull(request.getSenderRequest()) || Objects.isNull(request.getSenderAddressRequest())
+//        || Objects.isNull(request.getReceiverRequest()) || Objects.isNull(request.getReceiverAddressRequest())
+//        || Objects.isNull(request.getCreatedAtRequest()) || Objects.isNull(request.getUpdatedAtRequest())
+//                || Objects.isNull(request.getInformationRequest()))  {
+//            return null;
+//        }
 
-        SenderRequest senderRequest = letterRequest.getSenderRequest();
+        SenderRequest senderRequest = request.getSenderRequest();
 
         Sender senderEntity = new Sender();
         senderEntity.setSurname(senderRequest.getSurname2());
         senderEntity.setPhoneNumber(senderRequest.getPhoneNumber2());
         senderEntity.setEmail(senderRequest.getEmail2());
 
-        SenderAddressRequest senderAddressRequest = letterRequest.getSenderAddressRequest();
+        SenderAddressRequest senderAddressRequest = request.getSenderAddressRequest();
 
         SenderAddress senderAddress = new SenderAddress();
         senderAddress.setBuildingNumber(senderAddressRequest.getBuildingNumber());
@@ -38,7 +36,7 @@ public class LetterRequestMapper {
         senderAddress.setFlatNumber(senderAddressRequest.getFlatNumber());
         senderAddress.setPostcode(senderAddressRequest.getPostcode());
 
-        ReceiverRequest receiverRequest = letterRequest.getReceiverRequest();
+        ReceiverRequest receiverRequest = request.getReceiverRequest();
 
         Receiver receiver = new Receiver();
         receiver.setName(receiverRequest.getName());
@@ -46,7 +44,7 @@ public class LetterRequestMapper {
         receiver.setPhoneNumber(receiverRequest.getPhoneNumber());
         receiver.setEmail(receiverRequest.getEmail());
 
-        ReceiverAddressRequest receiverAddressRequest = letterRequest.getReceiverAddressRequest();
+        ReceiverAddressRequest receiverAddressRequest = request.getReceiverAddressRequest();
 
         ReceiverAddress receiverAddress = new ReceiverAddress();
         receiverAddress.setPostCode(receiverAddressRequest.getPostCode());
@@ -55,17 +53,17 @@ public class LetterRequestMapper {
         receiverAddress.setBuildingNumber(receiverAddressRequest.getBuildingNumber());
         receiverAddress.setFlatNumber(receiverAddressRequest.getFlatNumber());
 
-        CreatedAtRequest createdAtRequest = letterRequest.getCreatedAtRequest();
+        CreatedAtRequest createdAtRequest = request.getCreatedAtRequest();
 
         CreatedAt createdAt = new CreatedAt();
         createdAt.setCreateDate(createdAtRequest.getCreateDate());
 
-        UpdatedAtRequest updatedAtRequest = letterRequest.getUpdatedAtRequest();
+        UpdatedAtRequest updatedAtRequest = request.getUpdatedAtRequest();
 
         UpdatedAt updatedAt = new UpdatedAt();
         updatedAt.setUpdateDate(updatedAtRequest.getUpdateDate());
 
-        InformationRequest informationRequest = letterRequest.getInformationRequest();
+        InformationRequest informationRequest = request.getInformationRequest();
 
         Information information = new Information();
         information.setSize(informationRequest.getSize());
@@ -87,33 +85,32 @@ public class LetterRequestMapper {
         if(Objects.isNull(requestById) || requestById.getId()<0){
             return null;
         }
-
         LetterResponse letterResponse = new LetterResponse();
         letterResponse.setId(requestById.getId());
 
         return letterResponse;
     }
 
-    public LetterResponse mapToLetterResponseByPhoneNumber(RequestByPhoneNumber requestByPhoneNumber) {
-        if(Objects.isNull(requestByPhoneNumber) || requestByPhoneNumber.getPhoneNumber().length() != 9){
+    public LetterResponse mapToLetterResponseByPhoneNumber(ByPhoneNumberRequest byPhoneNumberRequest) {
+        if(Objects.isNull(byPhoneNumberRequest) || byPhoneNumberRequest.getPhoneNumber().length() != 9){
             return null;
         }
-        String phoneNumber = requestByPhoneNumber.getPhoneNumber();
+        String phoneNumber = byPhoneNumberRequest.getPhoneNumber();
         LetterResponse letterResponse = new LetterResponse();
 
         ReceiverResponse receiverResponse = new ReceiverResponse();
         receiverResponse.setPhoneNumberResponse(phoneNumber);
         return letterResponse;
     }
-    public Letter mapToLetterByPhoneNumber(RequestByPhoneNumber requestByPhoneNumber) {
-        if(Objects.isNull(requestByPhoneNumber) || requestByPhoneNumber.getPhoneNumber().length() != 9){
+    public Letter mapToLetterByPhoneNumber(ByPhoneNumberRequest byPhoneNumberRequest) {
+        if(Objects.isNull(byPhoneNumberRequest) || byPhoneNumberRequest.getPhoneNumber().length() != 9){
             return null;
         }
-        String phoneNumber = requestByPhoneNumber.getPhoneNumber();
+//        String phoneNumber = requestByPhoneNumber.getPhoneNumber();
         Letter letter = new Letter();
 
-        ReceiverResponse receiverResponse = new ReceiverResponse();
-        receiverResponse.setPhoneNumberResponse(phoneNumber);
+//        ReceiverResponse receiverResponse = new ReceiverResponse();
+//        receiverResponse.setPhoneNumberResponse(phoneNumber);
         return letter;
     }
 }

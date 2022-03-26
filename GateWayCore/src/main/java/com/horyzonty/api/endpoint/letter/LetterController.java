@@ -5,7 +5,7 @@ import com.horyzonty.api.endpoint.letter.response.Letters;
 import com.horyzonty.service.letter.LetterService;
 import com.horyzonty.util.Validator;
 import com.horyzonty.service.login.LoginService;
-import com.horyzonty.service.login.response.LoginResponse;
+import com.horyzonty.service.login.response.PhoneNumberAndCodeResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,40 +25,40 @@ public class LetterController {
         this.validator = validator;
     }
 
-    @GetMapping("/letters")
+    @GetMapping("/letters")   //Metoda Get z wykorzystaniem @RequestParam
     public ResponseEntity<Letters> myLetters(@RequestParam String phoneNumber, @RequestParam String token) {
         if(!validator.validatePhoneNumber(phoneNumber) || !validator.validateToken(token)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        ResponseEntity<LoginResponse> login = loginService.getLogin(phoneNumber, token);
+        ResponseEntity<PhoneNumberAndCodeResponse> login = loginService.getLogin(phoneNumber, token);
 
         if (Objects.isNull(login)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        LoginResponse body = login.getBody();
+        PhoneNumberAndCodeResponse body = login.getBody();
         if (Objects.nonNull(body) && body.isLogged()) {
-                   return ResponseEntity.ok().body(letterService.getLetters(phoneNumber));
+            return ResponseEntity.ok().body(letterService.getLetters(phoneNumber).getBody());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @PostMapping("/getLetters2/{number}/{token}")
+    @PostMapping("/getLetters2/{number}/{token}")  //Metoda Post z wykorzystaniem @PathVariable
     public String myLetters2(@PathVariable("number") String number, @PathVariable("token") String token) {
         //TODO: add number and token validation
-        ResponseEntity<LoginResponse> serviceLogin2 = loginService.getLogin2(number, token);
+        ResponseEntity<PhoneNumberAndCodeResponse> serviceLogin2 = loginService.getLogin2(number, token);
 
-        LoginResponse body = serviceLogin2.getBody();
+        PhoneNumberAndCodeResponse body = serviceLogin2.getBody();
         if (Objects.nonNull(body) && body.isLogged()) {
             return "OK";
         }
         return "Bad";
     }
 
-    @PostMapping("/getLetters3")
+    @PostMapping("/getLetters3") //Metoda Posr z wykorzystaniem @RequestBody
     public String myLetters3(@RequestBody LoginParam loginParam) {
-        ResponseEntity<LoginResponse> serviceLogin3 = loginService.getLogin3(loginParam.getNumberParam(), loginParam.getFreshTokenParam());
+        ResponseEntity<PhoneNumberAndCodeResponse> serviceLogin3 = loginService.getLogin3(loginParam.getNumberParam(), loginParam.getFreshTokenParam());
 
-        LoginResponse body = serviceLogin3.getBody();
+        PhoneNumberAndCodeResponse body = serviceLogin3.getBody();
         if (Objects.nonNull(body) && body.isLogged()) {
             return "OK";
         }

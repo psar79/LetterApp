@@ -1,6 +1,6 @@
 package userletters.api.letter.changeStatus;
 
-public class RequestedId {
+public class IdRequest {
 
     private Long id;
 

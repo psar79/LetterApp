@@ -5,20 +5,23 @@ import org.springframework.util.CollectionUtils;
 import userletters.api.letter.getByPhoneNumber.*;
 import userletters.dao.entity.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 public class LetterByPhoneNumberMapper {
 
-    public LettersByPhoneNumberResponse mapToLetterByPhoneNumberResponse (List<Letter> letters){
+    public LettersByPhoneNumberResponse mapToLetterByPhoneNumberResponse(List<Letter> letters) {
 
-        if(CollectionUtils.isEmpty(letters)){
+        if (CollectionUtils.isEmpty(letters)) {
             return null;
         }
         List<LetterByPhoneNumberResponse> letterByPhoneNumberResponses = letters.stream()
                 .filter(Objects::nonNull)
+//                .map(e->this.toLetterByPhoneNumber(e))
                 .map(this::toLetterByPhoneNumber)
                 .collect(Collectors.toList());
 
@@ -29,7 +32,88 @@ public class LetterByPhoneNumberMapper {
 
     }
 
+    public LettersByPhoneNumberResponse mapReceiverPhoneNumberToLetterByPhoneNumberResponse(List<Receiver> receivers) {
+        List<LetterByPhoneNumberResponse> letters = Optional.ofNullable(receivers).orElse(new ArrayList<>()).stream()
+                .filter(Objects::nonNull)
+                .map(this::fromReceiverToLetter)
+                .map(this::forLetterToLetterByPhoneNumberResponse)
+                .collect(Collectors.toList());
+
+        LettersByPhoneNumberResponse response = new LettersByPhoneNumberResponse();
+        response.setLetterByPhoneNumberReceiverList(letters);
+        return response;
+    }
+
+    private Letter fromReceiverToLetter(Receiver receiver) {
+        if (Objects.isNull(receiver) || Objects.isNull(receiver.getPhoneNumber())) {
+            return null;
+        }
+        Letter letter1 = new Letter();
+        Receiver receiver2 = letter1.getReceiver();
+        receiver2.setPhoneNumber(receiver.getPhoneNumber());
+
+        Receiver receiver1 = new Receiver();
+        receiver1.setPhoneNumber(receiver.getPhoneNumber());
+        Letter letter = new Letter();
+        letter.setReceiver(receiver1);
+        return letter;
+    }
+
+    private LetterByPhoneNumberResponse forLetterToLetterByPhoneNumberResponse(Letter letter) {
+        if(Objects.isNull(letter) || Objects.isNull(letter.getReceiver())){
+            return null;
+        }
+        ReceiverByPhoneResponse receiverByPhoneResponse = new ReceiverByPhoneResponse();
+        receiverByPhoneResponse.setPhoneNumberByPhoneResponse(letter.getReceiver().getPhoneNumber());
+        LetterByPhoneNumberResponse letterByPhoneNumberResponse = new LetterByPhoneNumberResponse();
+        letterByPhoneNumberResponse.setReceiverByPhoneResponse(receiverByPhoneResponse);
+        return letterByPhoneNumberResponse;
+    }
+//    private LetterByPhoneNumberResponse toLetterByPhoneNumberResponseFromReceiver(Receiver receiver){
+//        if (Objects.isNull(receiver) || Objects.isNull(receiver.getPhoneNumber())) {
+//            return null;
+//        }
+//        ReceiverByPhoneResponse receiverByPhoneResponse = new ReceiverByPhoneResponse();
+//        receiverByPhoneResponse.setPhoneNumberByPhoneResponse(receiver.getPhoneNumber());
+//        LetterByPhoneNumberResponse letterByPhoneNumberResponse = new LetterByPhoneNumberResponse();
+//        letterByPhoneNumberResponse.setReceiverByPhoneResponse(receiverByPhoneResponse);
+//        return letterByPhoneNumberResponse;
+//    }
+//    private Letter fromReceiverToLetter(Receiver receiver) {
+//        Letter letter = new Letter();
+//        if (Objects.isNull(receiver) || Objects.isNull(receiver.getPhoneNumber()) || Objects.isNull(receiver.getEmail()) || Objects.isNull(receiver.getName())
+//                || Objects.isNull(receiver.getSurname()) || Objects.isNull(letter.getReceiver())) {
+//            return null;
+//        }
+//        Receiver letterReceiver = letter.getReceiver();
+////        letterReceiver.setSurname(receiver.getSurname());
+////        letterReceiver.setName(receiver.getName());
+////        letterReceiver.setEmail(receiver.getEmail());
+//        letterReceiver.setPhoneNumber(receiver.getPhoneNumber());
+//        letter.setReceiver(letterReceiver);
+//        return letter;
+//    }
+//
+//
+//    private LetterByPhoneNumberResponse forLetterToLetterByPhoneNumberResponse(Letter letter) {
+//        if (Objects.isNull(letter) || Objects.isNull(letter.getReceiver())) {
+//            return null;
+//        }
+//        LetterByPhoneNumberResponse letterByPhoneNumberResponse = new LetterByPhoneNumberResponse();
+//        ReceiverByPhoneResponse receiverByPhoneResponse = letterByPhoneNumberResponse.getReceiverByPhoneResponse();
+//        receiverByPhoneResponse.setPhoneNumberByPhoneResponse(letter.getReceiver().getPhoneNumber());
+//
+//        letterByPhoneNumberResponse.setReceiverByPhoneResponse(receiverByPhoneResponse);
+//        return letterByPhoneNumberResponse;
+//    }
+
     private LetterByPhoneNumberResponse toLetterByPhoneNumber(Letter letter) {
+
+        if (Objects.isNull(letter) || Objects.isNull(letter.getSender()) || Objects.isNull(letter.getSenderAddress())
+                || Objects.isNull(letter.getReceiver()) || Objects.isNull(letter.getReceiverAddress()) || Objects.isNull(letter.getCreatedAt())
+                || Objects.isNull(letter.getInformation()) || Objects.isNull(letter.getUpdatedAt()) || Objects.isNull(letter.getLetterStatus())) {
+            return null;
+        }
 
         Sender sender = letter.getSender();
         SenderAddress senderAddress = letter.getSenderAddress();

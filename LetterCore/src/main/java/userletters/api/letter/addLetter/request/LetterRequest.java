@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 public class LetterRequest {
 
-    private Long id;
+    private Long id;    // " " to jest Blank ale też jest @NoteEmpty i @NotNull ,   "" to jest Empty i Blank ale nie jest @NotNull  ,  null - to jest Null, Blank i Empty ale nie jest @NotNull, @NotEmpty i @NotBlank
     @NotNull
     private SenderRequest senderRequest;
     @NotNull
